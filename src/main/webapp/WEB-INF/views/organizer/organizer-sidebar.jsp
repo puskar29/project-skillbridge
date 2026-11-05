@@ -24,6 +24,12 @@
       </a>
     </li>
 
+    <li class="nav-item ${ap == 'profile' ? 'active' : ''}">
+      <a href="${cp}/organizer/profile" class="nav-link ${ap == 'profile' ? 'active' : ''}">
+        <i class="fa-solid fa-building"></i><span>Organization Profile</span>
+      </a>
+    </li>
+
     <li class="sidebar-divider"></li>
     <li class="sidebar-heading">Manage</li>
 

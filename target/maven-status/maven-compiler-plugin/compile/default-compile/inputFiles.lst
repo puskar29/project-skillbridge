@@ -9,6 +9,7 @@
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/controller/StudentController.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/controller/WorkshopController.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/dao/InternshipDao.java
+/Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/dao/OrganizerDao.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/dao/StudentDao.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/dao/UserDao.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/dao/WorkshopDao.java

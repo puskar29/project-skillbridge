@@ -59,125 +59,37 @@
   <!-- Cards — demo data hardcoded, filter reads the classes -->
   <div class="ws-grid" id="ws-grid">
 
-    <article class="ws-card beginner online" data-summary="Eight weeks from your first line of HTML to deployed JavaScript apps — you'll finish with three portfolio-ready projects.">
-      <div class="ws-date-box">
-        <span class="ws-date-day">14</span>
-        <span class="ws-date-month">NOV</span>
-      </div>
-      <div class="ws-body">
-        <span class="ws-badge">Web</span>
-        <h3 class="ws-title">Web Development Bootcamp</h3>
-        <p class="ws-trainer"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Himalayan Labs</p>
-        <div class="ws-meta">
-          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Online</span>
-          <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 8 weeks</span>
+    <c:choose>
+      <c:when test="${not empty workshops}">
+        <c:forEach items="${workshops}" var="ws">
+          <article class="ws-card ${ws.level != null ? ws.level.name().toLowerCase() : ''} ${ws.location != null && ws.location.toLowerCase().contains('online') ? 'online' : ''}"
+                   data-summary="${ws.description}">
+            <div class="ws-date-box">
+              <span class="ws-date-day">${ws.deadline != null ? ws.deadline.dayOfMonth : '15'}</span>
+              <span class="ws-date-month">${ws.deadline != null ? ws.deadline.month : 'NOV'}</span>
+            </div>
+            <div class="ws-body">
+              <span class="ws-badge"><c:out value="${not empty ws.category ? ws.category : 'General'}" /></span>
+              <h3 class="ws-title"><c:out value="${ws.title}" /></h3>
+              <p class="ws-trainer"><i class="fa-solid fa-user-tie"></i> <c:out value="${ws.organizer}" /></p>
+              <div class="ws-meta">
+                <span><i class="fa-solid fa-location-dot"></i> <c:out value="${ws.location}" /></span>
+                <span><i class="fa-regular fa-clock"></i> <c:out value="${ws.duration}" /></span>
+              </div>
+              <div class="ws-card-bottom">
+                <span class="ws-level"><c:out value="${ws.level != null ? ws.level.displayName : 'All Levels'}" /></span>
+                <a href="javascript:void(0)" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+        </c:forEach>
+      </c:when>
+      <c:otherwise>
+        <div class="empty-state">
+          <p>No upcoming workshops at the moment.</p>
         </div>
-        <div class="ws-card-bottom">
-          <span class="ws-level">Beginner</span>
-          <a href="${cp}/signup" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
-
-    <article class="ws-card intermediate" data-summary="Six weeks of pandas, visualization and introductory modelling through live, project-based sessions.">
-      <div class="ws-date-box">
-        <span class="ws-date-day">5</span>
-        <span class="ws-date-month">DEC</span>
-      </div>
-      <div class="ws-body">
-        <span class="ws-badge">Data</span>
-        <h3 class="ws-title">Data Science with Python</h3>
-        <p class="ws-trainer"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Everest Analytics</p>
-        <div class="ws-meta">
-          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Kathmandu</span>
-          <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 weeks</span>
-        </div>
-        <div class="ws-card-bottom">
-          <span class="ws-level">Intermediate</span>
-          <a href="${cp}/signup" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
-
-    <article class="ws-card beginner online" data-summary="Four weeks covering research, wireframes and high-fidelity prototypes in Figma, ending with a real client brief.">
-      <div class="ws-date-box">
-        <span class="ws-date-day">12</span>
-        <span class="ws-date-month">DEC</span>
-      </div>
-      <div class="ws-body">
-        <span class="ws-badge">Design</span>
-        <h3 class="ws-title">UI/UX Design Crash Course</h3>
-        <p class="ws-trainer"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Craft Nepal</p>
-        <div class="ws-meta">
-          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Online</span>
-          <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 weeks</span>
-        </div>
-        <div class="ws-card-bottom">
-          <span class="ws-level">Beginner</span>
-          <a href="${cp}/signup" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
-
-    <article class="ws-card beginner" data-summary="Branching, pull requests and team collaboration habits explained simply — everything you need to contribute to any repository.">
-      <div class="ws-date-box">
-        <span class="ws-date-day">21</span>
-        <span class="ws-date-month">NOV</span>
-      </div>
-      <div class="ws-body">
-        <span class="ws-badge">Git</span>
-        <h3 class="ws-title">Git &amp; GitHub Essentials</h3>
-        <p class="ws-trainer"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> CloudKite</p>
-        <div class="ws-meta">
-          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Kathmandu</span>
-          <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 1 day</span>
-        </div>
-        <div class="ws-card-bottom">
-          <span class="ws-level">Beginner</span>
-          <a href="${cp}/signup" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
-
-    <article class="ws-card intermediate online" data-summary="Hooks composition, state modelling and performance techniques for React developers who already know the basics.">
-      <div class="ws-date-box">
-        <span class="ws-date-day">9</span>
-        <span class="ws-date-month">JAN</span>
-      </div>
-      <div class="ws-body">
-        <span class="ws-badge">React</span>
-        <h3 class="ws-title">Advanced React Patterns</h3>
-        <p class="ws-trainer"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Sagarmatha Soft</p>
-        <div class="ws-meta">
-          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Online</span>
-          <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 weeks</span>
-        </div>
-        <div class="ws-card-bottom">
-          <span class="ws-level">Intermediate</span>
-          <a href="${cp}/signup" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
-
-    <article class="ws-card intermediate" data-summary="Containers, networking and deployment on a real cloud account — you'll go from Docker image to live service.">
-      <div class="ws-date-box">
-        <span class="ws-date-day">23</span>
-        <span class="ws-date-month">JAN</span>
-      </div>
-      <div class="ws-body">
-        <span class="ws-badge">Cloud</span>
-        <h3 class="ws-title">Cloud Infrastructure Bootcamp</h3>
-        <p class="ws-trainer"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> CloudKite</p>
-        <div class="ws-meta">
-          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Lalitpur</span>
-          <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 10 weeks</span>
-        </div>
-        <div class="ws-card-bottom">
-          <span class="ws-level">Intermediate</span>
-          <a href="${cp}/signup" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </article>
+      </c:otherwise>
+    </c:choose>
 
   </div>
 

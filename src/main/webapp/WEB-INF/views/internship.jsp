@@ -67,131 +67,40 @@
   <!-- Cards — demo data hardcoded, js/filters.js reads the classes -->
   <div class="in-grid" id="in-grid">
 
-    <article class="in-card full" data-summary="Ship real UI components for client projects in React, pair with senior developers, and learn the team's testing and code review workflow.">
-      <div class="in-card-top">
-        <span class="in-badge">React</span>
-        <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-      </div>
-      <h3 class="in-title">Frontend Developer Intern</h3>
-      <p class="in-company">Himalayan Labs</p>
-      <div class="in-meta">
-        <span><i class="fa-solid fa-location-dot"></i> Kathmandu</span>
-        <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-        <span><i class="fa-regular fa-clock"></i> 3 months</span>
-      </div>
-      <div class="in-extra">
-        <span><i class="fa-solid fa-sack-dollar"></i> Stipend: NPR 25,000 / month</span>
-      </div>
-      <div class="in-card-bottom">
-        <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Nov 30, 2026</span>
-        <a href="${cp}/signup" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </article>
-
-    <article class="in-card full remote" data-summary="Work remote-first on REST APIs and database design in Node.js and PostgreSQL, and deploy your changes to production with the team.">
-      <div class="in-card-top">
-        <span class="in-badge">Node.js</span>
-        <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-      </div>
-      <h3 class="in-title">Backend Developer Intern</h3>
-      <p class="in-company">Sagarmatha Soft</p>
-      <div class="in-meta">
-        <span><i class="fa-solid fa-location-dot"></i> Remote</span>
-        <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-        <span><i class="fa-regular fa-clock"></i> 6 months</span>
-      </div>
-      <div class="in-extra">
-        <span><i class="fa-solid fa-sack-dollar"></i> Stipend: NPR 35,000 / month</span>
-      </div>
-      <div class="in-card-bottom">
-        <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Dec 15, 2026</span>
-        <a href="${cp}/signup" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </article>
-
-    <article class="in-card full" data-summary="Help maintain CI/CD pipelines and infrastructure as code — you'll work with Docker, Linux and cloud tooling every day.">
-      <div class="in-card-top">
-        <span class="in-badge">Docker</span>
-        <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-      </div>
-      <h3 class="in-title">DevOps Engineering Intern</h3>
-      <p class="in-company">CloudKite</p>
-      <div class="in-meta">
-        <span><i class="fa-solid fa-location-dot"></i> Lalitpur</span>
-        <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-        <span><i class="fa-regular fa-clock"></i> 6 months</span>
-      </div>
-      <div class="in-extra">
-        <span><i class="fa-solid fa-sack-dollar"></i> Stipend: NPR 32,000 / month</span>
-      </div>
-      <div class="in-card-bottom">
-        <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Jan 10, 2027</span>
-        <a href="${cp}/signup" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </article>
-
-    <article class="in-card part" data-summary="Clean and analyse real business datasets with Python and SQL, then build dashboards that help the team make faster decisions.">
-      <div class="in-card-top">
-        <span class="in-badge">Python</span>
-        <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-      </div>
-      <h3 class="in-title">Data Analyst Intern</h3>
-      <p class="in-company">Everest Analytics</p>
-      <div class="in-meta">
-        <span><i class="fa-solid fa-location-dot"></i> Kathmandu</span>
-        <span><i class="fa-solid fa-briefcase"></i> Part Time</span>
-        <span><i class="fa-regular fa-clock"></i> 4 months</span>
-      </div>
-      <div class="in-extra">
-        <span><i class="fa-solid fa-sack-dollar"></i> Stipend: NPR 20,000 / month</span>
-      </div>
-      <div class="in-card-bottom">
-        <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Jan 20, 2027</span>
-        <a href="${cp}/signup" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </article>
-
-    <article class="in-card part remote" data-summary="Research, wireframe and prototype product flows in Figma, and see your designs through to developer handoff.">
-      <div class="in-card-top">
-        <span class="in-badge">Figma</span>
-        <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-      </div>
-      <h3 class="in-title">UI/UX Design Intern</h3>
-      <p class="in-company">Craft Nepal</p>
-      <div class="in-meta">
-        <span><i class="fa-solid fa-location-dot"></i> Remote</span>
-        <span><i class="fa-solid fa-briefcase"></i> Part Time</span>
-        <span><i class="fa-regular fa-clock"></i> 3 months</span>
-      </div>
-      <div class="in-extra">
-        <span><i class="fa-solid fa-sack-dollar"></i> Stipend: NPR 18,000 / month</span>
-      </div>
-      <div class="in-card-bottom">
-        <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Dec 01, 2026</span>
-        <a href="${cp}/signup" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </article>
-
-    <article class="in-card part remote" data-summary="Own the social content calendar, write SEO-driven articles, and measure what works using real analytics.">
-      <div class="in-card-top">
-        <span class="in-badge">SEO</span>
-        <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-      </div>
-      <h3 class="in-title">Marketing &amp; Content Intern</h3>
-      <p class="in-company">Bright Ideas Co.</p>
-      <div class="in-meta">
-        <span><i class="fa-solid fa-location-dot"></i> Remote</span>
-        <span><i class="fa-solid fa-briefcase"></i> Part Time</span>
-        <span><i class="fa-regular fa-clock"></i> 2 months</span>
-      </div>
-      <div class="in-extra">
-        <span><i class="fa-solid fa-sack-dollar"></i> Stipend: NPR 15,000 / month</span>
-      </div>
-      <div class="in-card-bottom">
-        <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Nov 20, 2026</span>
-        <a href="${cp}/signup" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </article>
+    <c:choose>
+      <c:when test="${not empty internships}">
+        <c:forEach items="${internships}" var="intern">
+          <article class="in-card ${intern.type != null ? intern.type.name().toLowerCase() : ''} ${intern.location != null && intern.location.toLowerCase().contains('remote') ? 'remote' : ''}"
+                   data-summary="${intern.description}">
+            <div class="in-card-top">
+                <span class="in-badge">
+                  <c:out value="${not empty intern.skills ? intern.skills[0] : 'Internship'}" />
+                </span>
+              <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
+            </div>
+            <h3 class="in-title"><c:out value="${intern.title}" /></h3>
+            <p class="in-company"><c:out value="${intern.company}" /></p>
+            <div class="in-meta">
+              <span><i class="fa-solid fa-location-dot"></i> <c:out value="${intern.location}" /></span>
+              <span><i class="fa-solid fa-briefcase"></i> <c:out value="${intern.type.displayName}" /></span>
+              <span><i class="fa-regular fa-clock"></i> <c:out value="${intern.duration}" /></span>
+            </div>
+            <div class="in-extra">
+              <span><i class="fa-solid fa-sack-dollar"></i> Stipend: <c:out value="${intern.stipend}" /></span>
+            </div>
+            <div class="in-card-bottom">
+              <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${intern.deadline}" /></span>
+              <a href="javascript:void(0)" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </article>
+        </c:forEach>
+      </c:when>
+      <c:otherwise>
+        <div class="empty-state">
+          <p>No internships posted yet. Check back soon!</p>
+        </div>
+      </c:otherwise>
+    </c:choose>
 
   </div>
 

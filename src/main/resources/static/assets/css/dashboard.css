@@ -323,6 +323,18 @@ button { font-family: "Inter", sans-serif; }
     box-shadow: var(--shadow-md);
 }
 
+.dashboard-profile-avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 2px solid #c7d2fe;
+    background: #eef2ff;
+    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.16);
+}
+
 .hamburger-btn {
     display: none;
     width: 40px;

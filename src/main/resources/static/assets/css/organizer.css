@@ -397,6 +397,18 @@ body {
     box-shadow: 0 6px 14px rgba(33, 150, 243, 0.35);
 }
 
+.dashboard-profile-avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 2px solid #90caf9;
+    background: #e3f2fd;
+    box-shadow: 0 2px 8px rgba(13, 71, 161, 0.16);
+}
+
 /* Menu button, small screens only */
 .hamburger-btn {
     display: none;

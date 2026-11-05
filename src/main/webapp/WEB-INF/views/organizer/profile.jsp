@@ -58,10 +58,14 @@
 
     .simple-profile-photo {
       flex: 0 0 auto !important;
-      width: 104px !important;
-      height: 104px !important;
+      width: 120px !important;
+      height: 120px !important;
       border-radius: 50% !important;
       object-fit: cover !important;
+      object-position: center !important;
+      border: 5px solid #ffffff !important;
+      box-shadow: 0 0 0 2px #90caf9, 0 10px 24px rgba(13, 71, 161, 0.18) !important;
+      background: #e3f2fd !important;
     }
 
     .simple-profile-identity {
@@ -199,9 +203,6 @@
       <a href="${cp}/index" class="view-site" target="_blank">
         <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
       </a>
-      <div class="admin-avatar" title="${organizer.firstName} ${organizer.lastName}">
-        ${organizer.firstName.substring(0, 1)}
-      </div>
       <button class="hamburger-btn" onclick="openSidebar()" aria-label="Toggle sidebar">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -217,7 +218,18 @@
     <div class="simple-profile">
 
       <header class="simple-profile-head">
-        <img src="${cp}/assets/images/default-avatar.svg" alt="Profile picture" class="simple-profile-photo">
+        <c:choose>
+          <c:when test="${not empty organizer.profileImage}">
+            <img src="${cp}/uploads/profile/${organizer.profileImage}"
+                 alt="Organizer profile picture"
+                 class="simple-profile-photo">
+          </c:when>
+          <c:otherwise>
+            <img src="${cp}/assets/images/default-avatar.svg"
+                 alt="Default profile picture"
+                 class="simple-profile-photo">
+          </c:otherwise>
+        </c:choose>
 
         <div class="simple-profile-identity">
           <h1>${organizer.organizationName}</h1>

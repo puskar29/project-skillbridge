@@ -1,8 +1,8 @@
 package com.puskar.skillbridge.config;
 
+import com.puskar.skillbridge.dao.UserDao;
 import com.puskar.skillbridge.model.Role;
 import com.puskar.skillbridge.model.User;
-import com.puskar.skillbridge.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +21,9 @@ public class AdminInitializer {
     private String adminPassword;
 
     @Bean
-    public CommandLineRunner initSuperAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public CommandLineRunner initSuperAdmin(UserDao userDao, PasswordEncoder passwordEncoder){
         return args -> {
-            if (!userRepository.existsByEmailIgnoreCase(adminEmail)){
+            if (!userDao.existsByEmailIgnoreCase(adminEmail)){
                 User admin = new User(
                         "Super",
                         "Admin",
@@ -34,7 +34,7 @@ public class AdminInitializer {
                 );
 
                 admin.setEnabled(true);
-                userRepository.save(admin);
+                userDao.save(admin);
                 System.out.println("Super Admin created successfully!");
                 System.out.println("Email: " + adminEmail);
                 System.out.println("Password: " + adminPassword);

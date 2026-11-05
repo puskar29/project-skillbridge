@@ -57,7 +57,6 @@
       <a href="${cp}/index" class="view-site" target="_blank">
         <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
       </a>
-      <div class="admin-avatar" title="Aarav Sharma">A</div>
       <button class="hamburger-btn" onclick="openSidebar()" aria-label="Toggle sidebar">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -87,8 +86,9 @@
 
             <div class="form-row">
               <div class="field">
-                <label for="organizer">Organizer <span class="required">*</span></label>
-                <input type="text" id="organizer" name="organizer" value="${workshop.organizer}">
+                <label>Organizer</label>
+                <input type="text" value="${organizer.organizationName}" readonly>
+                <input type="hidden" name="organizer" value="${organizer.organizationName}">
               </div>
               <div class="field">
                 <label for="location">Location</label>
@@ -203,8 +203,9 @@
 
             <div class="form-row">
               <div class="field">
-                <label for="organizer">Organizer <span class="required">*</span></label>
-                <input type="text" id="organizer" name="organizer" placeholder="Himalayan Labs">
+                <label>Organizer</label>
+                <input type="text" value="${organizer.organizationName}" readonly>
+                <input type="hidden" name="organizer" value="${organizer.organizationName}">
               </div>
               <div class="field">
                 <label for="location">Location</label>

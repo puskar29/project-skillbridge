@@ -61,6 +61,8 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "profile_image", length = 255)
+    private String profileImage;
 
     public User() {
     }
@@ -168,4 +170,11 @@ public class User implements Serializable {
     }
 
 
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 }

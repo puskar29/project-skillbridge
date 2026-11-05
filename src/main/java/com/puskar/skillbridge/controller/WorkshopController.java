@@ -39,11 +39,10 @@ public class WorkshopController {
 
         Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElse(null);
         workshop.setOrganizerAccount(currentOrganizer);
-        if (workshop.getOrganizer() ==  null || workshop.getOrganizer().isBlank()){
-            if (currentOrganizer != null){
-                workshop.setOrganizer(currentOrganizer.getOrganizationName());
-            }
+        if (currentOrganizer == null) {
+            return "redirect:/login";
         }
+        workshop.setOrganizer(currentOrganizer.getOrganizationName());
 
         workshop.setCreatedAt(LocalDate.now());
         workshopDao.save(workshop);
@@ -68,8 +67,12 @@ public class WorkshopController {
 
     @PostMapping("/organizer/workshop/edit/{id}")
     public String updateWorkshop(@PathVariable Long id,
-                                 @ModelAttribute Workshop workshop){
+                                 @ModelAttribute Workshop workshop,
+                                 Principal principal){
+        Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
         workshop.setId(id);
+        workshop.setOrganizer(currentOrganizer.getOrganizationName());
+        workshop.setOrganizerAccount(currentOrganizer);
         workshopService.updateWorkshop(workshop);
         return "redirect:/organizer/workshop/manage";
     }

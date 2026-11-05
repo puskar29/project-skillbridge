@@ -1,5 +1,7 @@
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/SkillbridgeApplication.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/config/AdminInitializer.java
+/Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/config/CurrentUserModelAdvice.java
+/Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/config/FileStoreConfig.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/config/SecurityConfig.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/controller/AdminController.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/controller/AuthController.java
@@ -24,9 +26,10 @@
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/model/Student.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/model/User.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/model/Workshop.java
-/Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/repository/UserRepository.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/CustomUserDetailService.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/InternshipService.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/InternshipServiceImp.java
+/Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/UploadService.java
+/Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/UploadServiceImp.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/WorkshopService.java
 /Users/puskarthapamagar/Desktop/SpringBoot Projects/skillbridge/src/main/java/com/puskar/skillbridge/service/WorkshopServiceImp.java

@@ -560,7 +560,18 @@
             <div class="simple-profile">
 
                 <header class="simple-profile-head">
-                    <img src="${cp}/assets/images/default-avatar.svg" alt="Profile picture" class="simple-profile-photo">
+                    <c:choose>
+                        <c:when test="${not empty student.profileImage}">
+                            <img src="${cp}/uploads/profile/${student.profileImage}"
+                                 alt="Student profile picture"
+                                 class="simple-profile-photo">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${cp}/assets/images/default-avatar.svg"
+                                 alt="Default profile picture"
+                                 class="simple-profile-photo">
+                        </c:otherwise>
+                    </c:choose>
 
                     <div class="simple-profile-identity">
                         <h1>${student.firstName} ${student.lastName}</h1>

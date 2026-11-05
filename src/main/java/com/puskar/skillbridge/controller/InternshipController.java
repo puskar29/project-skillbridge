@@ -36,11 +36,10 @@ public class InternshipController {
                                  ){
         Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElse(null);
         internship.setOrganizer(currentOrganizer);
-        if (internship.getCompany() == null || internship.getCompany().isBlank()){
-            if (currentOrganizer != null){
-                internship.setCompany(currentOrganizer.getOrganizationName());
-            }
+        if (currentOrganizer == null) {
+            return "redirect:/login";
         }
+        internship.setCompany(currentOrganizer.getOrganizationName());
 
         List<String> skills = new ArrayList<>();
 
@@ -78,7 +77,9 @@ public class InternshipController {
     @PostMapping("/organizer/internship/edit/{id}")
     public String editInternship(@PathVariable Long id,
                                  @ModelAttribute Internship internship,
-                                 @RequestParam(name = "skillsText", required = false) String skillsText, Model model){
+                                 @RequestParam(name = "skillsText", required = false) String skillsText,
+                                 Model model,
+                                 Principal principal){
         model.addAttribute("edit", true);
         List<String> skills = new ArrayList<>();
         if (skillsText != null && !skillsText.isBlank()){
@@ -91,6 +92,9 @@ public class InternshipController {
         }
 
         internship.setId(id);
+        Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
+        internship.setCompany(currentOrganizer.getOrganizationName());
+        internship.setOrganizer(currentOrganizer);
         internship.setSkills(skills);
         internshipService.updateInternship(internship);
         return "redirect:/organizer/internship/manage?updated";

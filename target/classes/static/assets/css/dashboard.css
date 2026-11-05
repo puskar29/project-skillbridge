@@ -90,6 +90,68 @@ button { font-family: "Inter", sans-serif; }
     box-shadow: var(--shadow-sm);
 }
 
+.sidebar.student-sidebar {
+    background: #172554;
+    border-right-color: #1e3a8a;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.sidebar.student-sidebar .sidebar-brand {
+    border-bottom-color: rgba(147, 197, 253, 0.18);
+}
+
+.sidebar.student-sidebar .brand-text {
+    color: #ffffff;
+}
+
+.sidebar.student-sidebar .brand-text span {
+    color: #93c5fd;
+}
+
+.sidebar.student-sidebar .brand-tag {
+    color: rgba(219, 234, 254, 0.72);
+}
+
+.sidebar.student-sidebar .sidebar-label {
+    color: #93c5fd;
+}
+
+.sidebar.student-sidebar .nav-item {
+    color: rgba(239, 246, 255, 0.78);
+}
+
+.sidebar.student-sidebar .nav-item i {
+    color: rgba(191, 219, 254, 0.62);
+}
+
+.sidebar.student-sidebar .nav-item:hover {
+    background: #1e3a8a;
+    color: #ffffff;
+}
+
+.sidebar.student-sidebar .nav-item:hover i,
+.sidebar.student-sidebar .nav-item.active,
+.sidebar.student-sidebar .nav-item.active i {
+    color: #ffffff;
+}
+
+.sidebar.student-sidebar .nav-item.active {
+    background: #4f46e5;
+}
+
+.sidebar.student-sidebar .sidebar-logout {
+    border-top-color: rgba(147, 197, 253, 0.18);
+}
+
+.sidebar.student-sidebar .sidebar-logout a {
+    color: #fca5a5;
+}
+
+.sidebar.student-sidebar .sidebar-logout a:hover {
+    background: rgba(239, 68, 68, 0.16);
+    color: #fecaca;
+}
+
 .sidebar-brand {
     display: flex;
     align-items: center;
@@ -259,6 +321,18 @@ button { font-family: "Inter", sans-serif; }
     justify-content: center;
     flex-shrink: 0;
     box-shadow: var(--shadow-md);
+}
+
+.dashboard-profile-avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 2px solid #c7d2fe;
+    background: #eef2ff;
+    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.16);
 }
 
 .hamburger-btn {

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
 
@@ -19,8 +21,11 @@ public class HomeController {
 
     @GetMapping({"/", "/home", "/index"})
     public String home(Model model){
-        model.addAttribute("internships", internshipService.getActiveInternships());
-        model.addAttribute("workshops", workshopService.getActiveWorkshops());
+        List<?> activeInternships = internshipService.getActiveInternships();
+        List<?> activeWorkshops = workshopService.getActiveWorkshops();
+
+        model.addAttribute("trendingInternships", activeInternships.stream().limit(3).toList());
+        model.addAttribute("trendingWorkshops", activeWorkshops.stream().limit(3).toList());
         return "index";
     }
 

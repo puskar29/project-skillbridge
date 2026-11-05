@@ -1,7 +1,7 @@
 package com.puskar.skillbridge.service;
 
+import com.puskar.skillbridge.dao.UserDao;
 import com.puskar.skillbridge.model.User;
-import com.puskar.skillbridge.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,15 +12,15 @@ import java.util.List;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserDao userDao;
 
-    public CustomUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmailIgnoreCase(email)
+        User user = userDao.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
         if (!user.isEnabled()){

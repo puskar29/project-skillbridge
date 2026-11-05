@@ -2,11 +2,14 @@ package com.puskar.skillbridge.controller;
 
 import com.puskar.skillbridge.dao.OrganizerDao;
 import com.puskar.skillbridge.model.Organizer;
+import com.puskar.skillbridge.service.UploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
@@ -17,8 +20,14 @@ public class OrganizerController {
 
     private final OrganizerDao organizerDao;
 
-    public OrganizerController(OrganizerDao organizerDao) {
+    private final UploadService uploadService;
+
+    public OrganizerController(
+            OrganizerDao organizerDao,
+            UploadService uploadService) {
+
         this.organizerDao = organizerDao;
+        this.uploadService = uploadService;
     }
 
     @GetMapping("/organizer/home")
@@ -72,4 +81,26 @@ public class OrganizerController {
         return "redirect:/organizer/profile?success";
     }
 
+    @PostMapping("/organizer/profile/photo")
+    public String uploadOrganizerPhoto(
+            @RequestParam("profileImage") MultipartFile imageFile,
+            Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        Organizer organizer = organizerDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        String fileName = uploadService.uploadProfileImg(imageFile);
+
+        if (fileName != null) {
+            organizer.setProfileImage(fileName);
+            organizerDao.save(organizer);
+        }
+
+        return "redirect:/organizer/profile";
+    }
 }

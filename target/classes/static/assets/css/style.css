@@ -94,6 +94,87 @@ body{
     border-radius: 30px;
 }
 
+.profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    max-width: 170px;
+    padding: 4px 12px 4px 5px;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    color: #1e3a8a;
+    background: #f8fbff;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.profile-link:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.navbar-profile-image,
+.navbar-profile-fallback {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 50%;
+}
+
+.navbar-profile-image {
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid #bfdbfe;
+}
+
+.navbar-profile-fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.navbar-profile-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.logout-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 42px;
+    padding: 0 16px;
+    border: 1px solid #fecaca;
+    border-radius: 999px;
+    background: #fff7f7;
+    color: #b91c1c;
+    cursor: pointer;
+    font: 600 14px "Inter", sans-serif;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.logout-btn:hover {
+    border-color: #fca5a5;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
 .login-btn{
     border: 1px solid #ccc;
     color: #313131;
@@ -3555,4 +3636,12 @@ body{
 .page-section .section-title {
     text-align: center;
     margin-bottom: 36px;
+}
+
+.simple-profile-photo {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #e3f2fd;
 }

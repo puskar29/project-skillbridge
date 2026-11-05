@@ -28,8 +28,68 @@
       <a href="${cp}/contact" class="nav-link">Contact</a>
     </nav>
     <div class="auth-buttons">
-      <a href="${cp}/login" class="login-btn">Login</a>
-      <a href="${cp}/signup" class="signup-btn">Sign Up</a>
+      <c:choose>
+
+        <%-- Logged-in student --%>
+        <c:when test="${not empty student}">
+          <a href="${cp}/student/profile" class="profile-link">
+            <c:choose>
+              <c:when test="${not empty student.profileImage}">
+                <img src="${cp}/uploads/profile/${student.profileImage}"
+                     alt="${student.firstName} ${student.lastName}"
+                     class="navbar-profile-image">
+              </c:when>
+              <c:otherwise>
+                <span class="navbar-profile-fallback">
+                  ${empty student.firstName ? 'S' : student.firstName.substring(0, 1)}
+                </span>
+              </c:otherwise>
+            </c:choose>
+            <span class="navbar-profile-name">${student.firstName}</span>
+          </a>
+
+          <form method="post" action="${cp}/logout" class="logout-form">
+            <button type="submit" class="logout-btn">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Logout</span>
+            </button>
+          </form>
+        </c:when>
+
+        <%-- Logged-in organizer --%>
+        <c:when test="${not empty organizer}">
+          <a href="${cp}/organizer/profile" class="profile-link">
+            <c:choose>
+              <c:when test="${not empty organizer.profileImage}">
+                <img src="${cp}/uploads/profile/${organizer.profileImage}"
+                     alt="${organizer.firstName} ${organizer.lastName}"
+                     class="navbar-profile-image">
+              </c:when>
+              <c:otherwise>
+                <span class="navbar-profile-fallback">
+                  ${empty organizer.firstName ? 'O' : organizer.firstName.substring(0, 1)}
+                </span>
+              </c:otherwise>
+            </c:choose>
+            <span class="navbar-profile-name">${organizer.firstName}</span>
+          </a>
+
+          <form method="post" action="${cp}/logout" class="logout-form">
+            <button type="submit" class="logout-btn">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Logout</span>
+            </button>
+          </form>
+        </c:when>
+
+        <%-- Guest user --%>
+        <c:otherwise>
+          <a href="${cp}/login" class="login-btn">Login</a>
+          <a href="${cp}/signup" class="signup-btn">Sign Up</a>
+        </c:otherwise>
+
+      </c:choose>
+
       <button class="hamburger" aria-label="Toggle menu">
         <i class="fa-solid fa-bars open"></i>
         <i class="fa-solid fa-xmark close"></i>

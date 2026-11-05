@@ -3,6 +3,7 @@ package com.puskar.skillbridge.controller;
 import com.puskar.skillbridge.dao.StudentDao;
 import com.puskar.skillbridge.model.Student;
 import com.puskar.skillbridge.service.InternshipService;
+import com.puskar.skillbridge.service.UploadService;
 import com.puskar.skillbridge.service.WorkshopService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
@@ -23,11 +25,13 @@ public class StudentController {
     private final StudentDao studentDao;
     private final InternshipService internshipService;
     private final WorkshopService workshopService;
+    private final UploadService uploadService;
 
-    public StudentController(StudentDao studentDao, InternshipService internshipService, WorkshopService workshopService) {
+    public StudentController(StudentDao studentDao, InternshipService internshipService, WorkshopService workshopService, UploadService uploadService) {
         this.studentDao = studentDao;
         this.internshipService = internshipService;
         this.workshopService = workshopService;
+        this.uploadService = uploadService;
     }
 
     @GetMapping({"/student/dashboard", "/student/home"})
@@ -94,6 +98,29 @@ public class StudentController {
 
         studentDao.save(student);
         return "redirect:/student/profile?success";
+    }
+
+    @PostMapping("/student/profile/photo")
+    public String uploadStudentPhoto(
+            @RequestParam("profileImage") MultipartFile imageFile,
+            Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        Student student = studentDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        String fileName = uploadService.uploadProfileImg(imageFile);
+
+        if (fileName != null) {
+            student.setProfileImage(fileName);
+            studentDao.save(student);
+        }
+
+        return "redirect:/student/profile";
     }
 }
 

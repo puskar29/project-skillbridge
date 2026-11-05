@@ -1,10 +1,10 @@
 package com.puskar.skillbridge.controller;
 
+import com.puskar.skillbridge.dao.UserDao;
 import com.puskar.skillbridge.model.Gender;
 import com.puskar.skillbridge.model.Organizer;
 import com.puskar.skillbridge.model.Student;
 import com.puskar.skillbridge.model.User;
-import com.puskar.skillbridge.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +19,12 @@ import java.util.List;
 @Controller
 public class AuthController {
 
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserDao userDao;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public AuthController(PasswordEncoder passwordEncoder, UserDao userDao) {
         this.passwordEncoder = passwordEncoder;
+        this.userDao = userDao;
     }
 
 
@@ -68,7 +68,7 @@ public class AuthController {
             return "redirect:/signup?error=required&role=" + selectedRole;
         }
 
-        if (userRepository.existsByEmailIgnoreCase(cleanEmail)) {
+        if (userDao.existsByEmailIgnoreCase(cleanEmail)) {
             return "redirect:/signup?error=email&role=" + selectedRole;
         }
 
@@ -130,7 +130,7 @@ public class AuthController {
             );
         }
 
-        userRepository.save(user);
+        userDao.save(user);
 
         return "redirect:/login?registered=true";
     }

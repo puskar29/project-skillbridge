@@ -45,9 +45,6 @@
       <a href="${cp}/index" class="view-site" target="_blank">
         <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
       </a>
-      <div class="admin-avatar" title="${organizer.firstName} ${organizer.lastName}">
-        ${organizer.firstName.substring(0, 1)}
-      </div>
       <button class="hamburger-btn" onclick="openSidebar()" aria-label="Toggle sidebar">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -72,6 +69,7 @@
         <div class="form-section-title">
           <i class="fa-solid fa-user"></i> Account Holder
         </div>
+
 
         <div class="form-row">
           <div class="field">
@@ -157,6 +155,26 @@
         <a href="${cp}/organizer/profile" class="btn btn-outline">Cancel</a>
       </div>
 
+    </form>
+
+    <form class="panel form-card"
+          method="post"
+          action="${cp}/organizer/profile/photo"
+          enctype="multipart/form-data">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
+      <div class="form-section">
+        <div class="form-section-title">
+          <i class="fa-solid fa-camera"></i> Profile Photo
+        </div>
+        <label for="profileImage">Organizer profile photo</label>
+        <input type="file"
+               id="profileImage"
+               name="profileImage"
+               accept=".jpg,.jpeg,.png,.webp"
+               required>
+        <button type="submit" class="btn btn-primary">Upload Photo</button>
+      </div>
     </form>
   </div>
 

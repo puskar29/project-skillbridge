@@ -53,7 +53,6 @@
       <a href="${cp}/index" class="view-site" target="_blank">
         <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
       </a>
-      <div class="admin-avatar" title="Aarav Sharma">A</div>
       <button class="hamburger-btn" onclick="openSidebar()" aria-label="Toggle sidebar">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -83,8 +82,9 @@
 
             <div class="form-row">
               <div class="field">
-                <label for="intCompany">Company / Organization <span class="required">*</span></label>
-                <input type="text" id="intCompany" name="company" value="${internship.company}">
+                <label>Company / Organization</label>
+                <input type="text" value="${organizer.organizationName}" readonly>
+                <input type="hidden" name="company" value="${organizer.organizationName}">
               </div>
               <div class="field">
                 <label for="intLocation">Location</label>
@@ -211,8 +211,9 @@
 
             <div class="form-row">
               <div class="field">
-                <label for="intCompany">Company / Organization <span class="required">*</span></label>
-                <input type="text" id="intCompany" name="company" placeholder="Himalayan Labs" required>
+                <label>Company / Organization</label>
+                <input type="text" value="${organizer.organizationName}" readonly>
+                <input type="hidden" name="company" value="${organizer.organizationName}">
               </div>
               <div class="field">
                 <label for="intLocation">Location</label>

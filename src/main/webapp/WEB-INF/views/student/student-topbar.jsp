@@ -16,9 +16,6 @@
     <a href="${cp}/index" class="view-site" target="_blank">
       <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
     </a>
-    <div class="admin-avatar" title="${empty student ? 'Student' : student.firstName} ${empty student ? '' : student.lastName}">
-      ${empty student.firstName ? 'S' : student.firstName.substring(0, 1)}
-    </div>
     <button class="hamburger-btn" onclick="openSidebar()" aria-label="Toggle sidebar">
       <i class="fa-solid fa-bars"></i>
     </button>

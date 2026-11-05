@@ -133,108 +133,51 @@
         <p class="opp-tab" data-filter="all">Trending Opportunities</p>
     </div>
     <div class="opp-grid">
-        <div class="opp-card" data-summary="Build and ship UI features for customer-facing web apps, pair with senior developers, and learn the team's review and testing workflow." data-type="internship">
-            <div class="opp-card-top">
-                <span class="opp-badge">Internship</span>
-                <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
+        <c:forEach items="${trendingInternships}" var="intern">
+            <div class="opp-card" data-summary="<c:out value='${intern.description}'/>" data-type="internship">
+                <div class="opp-card-top">
+                    <span class="opp-badge">Internship</span>
+                    <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
+                </div>
+                <h3 class="opp-title"><c:out value="${intern.title}"/></h3>
+                <p class="opp-company"><c:out value="${intern.company}"/></p>
+                <div class="opp-meta">
+                    <span><i class="fa-solid fa-location-dot"></i> <c:out value="${intern.location}"/></span>
+                    <span><i class="fa-solid fa-briefcase"></i> <c:out value="${intern.type != null ? intern.type.displayName : 'Internship'}"/></span>
+                    <span><i class="fa-regular fa-clock"></i> <c:out value="${intern.duration}"/></span>
+                </div>
+                <div class="opp-card-bottom">
+                    <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${intern.deadline}"/></span>
+                    <a href="${cp}/signup" class="opp-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
             </div>
-            <h3 class="opp-title">Frontend Development Intern</h3>
-            <p class="opp-company">Nexora Technologies</p>
-            <div class="opp-meta">
-                <span><i class="fa-solid fa-location-dot"></i> Bengaluru, India</span>
-                <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-                <span><i class="fa-regular fa-clock"></i> 6 Months</span>
+        </c:forEach>
+
+        <c:forEach items="${trendingWorkshops}" var="workshop">
+            <div class="opp-card workshop" data-summary="<c:out value='${workshop.description}'/>" data-type="workshop">
+                <div class="opp-card-top">
+                    <span class="opp-badge">Workshop</span>
+                    <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
+                </div>
+                <h3 class="opp-title"><c:out value="${workshop.title}"/></h3>
+                <p class="opp-company"><c:out value="${workshop.organizer}"/></p>
+                <div class="opp-meta">
+                    <span><i class="fa-solid fa-location-dot"></i> <c:out value="${workshop.location}"/></span>
+                    <span><i class="fa-solid fa-chalkboard-user"></i> <c:out value="${workshop.level != null ? workshop.level.displayName : 'All Levels'}"/></span>
+                    <span><i class="fa-regular fa-clock"></i> <c:out value="${workshop.duration}"/></span>
+                </div>
+                <div class="opp-card-bottom">
+                    <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${workshop.deadline}"/></span>
+                    <a href="${cp}/signup" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
             </div>
-            <div class="opp-card-bottom">
-                <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Nov 30, 2026</span>
-                <a href="${cp}/signup" class="opp-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
+        </c:forEach>
+
+        <c:if test="${empty trendingInternships and empty trendingWorkshops}">
+            <div class="empty-state">
+                <p>No opportunities have been posted yet. Check back soon!</p>
             </div>
-        </div>
-        <div class="opp-card" data-summary="Clean and explore real business datasets, build dashboards with Python or SQL, and present your findings to the analytics team." data-type="internship">
-            <div class="opp-card-top">
-                <span class="opp-badge">Internship</span>
-                <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-            </div>
-            <h3 class="opp-title">Data Analyst Intern</h3>
-            <p class="opp-company">Bluewave Analytics</p>
-            <div class="opp-meta">
-                <span><i class="fa-solid fa-location-dot"></i> Hyderabad, India</span>
-                <span><i class="fa-solid fa-briefcase"></i> Part Time</span>
-                <span><i class="fa-regular fa-clock"></i> 3 Months</span>
-            </div>
-            <div class="opp-card-bottom">
-                <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Oct 28, 2026</span>
-                <a href="${cp}/signup" class="opp-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
-        <div class="opp-card" data-summary="Design and test REST endpoints, work with relational databases, and deploy small services alongside the engineering team." data-type="internship">
-            <div class="opp-card-top">
-                <span class="opp-badge">Internship</span>
-                <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-            </div>
-            <h3 class="opp-title">Backend Engineer Intern</h3>
-            <p class="opp-company">Corelith Solutions</p>
-            <div class="opp-meta">
-                <span><i class="fa-solid fa-location-dot"></i> Pune, India</span>
-                <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-                <span><i class="fa-regular fa-clock"></i> 6 Months</span>
-            </div>
-            <div class="opp-card-bottom">
-                <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Dec 05, 2026</span>
-                <a href="${cp}/signup" class="opp-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
-        <div class="opp-card workshop" data-summary="Two intensive days covering research, wireframes and polished prototypes — you'll leave with a redesigned flow for your portfolio." data-type="workshop">
-            <div class="opp-card-top">
-                <span class="opp-badge">Workshop</span>
-                <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-            </div>
-            <h3 class="opp-title">UI/UX Design Masterclass</h3>
-            <p class="opp-company">Design Crafters Guild</p>
-            <div class="opp-meta">
-                <span><i class="fa-solid fa-location-dot"></i> Online</span>
-                <span><i class="fa-solid fa-chalkboard-user"></i> Beginner</span>
-                <span><i class="fa-regular fa-clock"></i> 2 Days</span>
-            </div>
-            <div class="opp-card-bottom">
-                <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Oct 20, 2026</span>
-                <a href="${cp}/signup" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
-        <div class="opp-card workshop" data-summary="Forty hours of hands-on pandas, visualization and introductory machine learning, taught through live project sessions." data-type="workshop">
-            <div class="opp-card-top">
-                <span class="opp-badge">Workshop</span>
-                <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-            </div>
-            <h3 class="opp-title">Python for Data Science</h3>
-            <p class="opp-company">TechBridge Academy</p>
-            <div class="opp-meta">
-                <span><i class="fa-solid fa-location-dot"></i> Bengaluru, India</span>
-                <span><i class="fa-solid fa-chalkboard-user"></i> Intermediate</span>
-                <span><i class="fa-regular fa-clock"></i> 40 Hours</span>
-            </div>
-            <div class="opp-card-bottom">
-                <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Nov 08, 2026</span>
-                <a href="${cp}/signup" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
-        <div class="opp-card workshop" data-summary="Six weeks of Linux, containers, CI/CD and cloud infrastructure — enough to run and ship a real project end to end." data-type="workshop">
-            <div class="opp-card-top">
-                <span class="opp-badge">Workshop</span>
-                <span class="opp-bookmark"><i class="fa-regular fa-bookmark"></i></span>
-            </div>
-            <h3 class="opp-title">Cloud &amp; DevOps Bootcamp</h3>
-            <p class="opp-company">Nimbus Labs</p>
-            <div class="opp-meta">
-                <span><i class="fa-solid fa-location-dot"></i> Online</span>
-                <span><i class="fa-solid fa-chalkboard-user"></i> Advanced</span>
-                <span><i class="fa-regular fa-clock"></i> 6 Weeks</span>
-            </div>
-            <div class="opp-card-bottom">
-                <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: Dec 12, 2026</span>
-                <a href="${cp}/signup" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
+        </c:if>
     </div>
 </section>
 <jsp:include page="footer.jsp"></jsp:include>

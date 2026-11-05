@@ -9,8 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class StudentController {
@@ -25,12 +30,15 @@ public class StudentController {
         this.workshopService = workshopService;
     }
 
-    @GetMapping({"/student/dashboard", "/student/profile", "/student/home"})
+    @GetMapping({"/student/dashboard", "/student/home"})
     public String StudentProfile(Model model, Principal principal){
 
         if (principal != null){
             Student student = studentDao.findByEmailIgnoreCase(principal.getName()).orElse(null);
             model.addAttribute("student", student);
+            if (student != null && student.getCreatedAt() != null) {
+                model.addAttribute("memberSince", student.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH)));
+            }
         }
 
         model.addAttribute("internships", internshipService.getActiveInternships());
@@ -39,8 +47,28 @@ public class StudentController {
         return "student/dashboard";
     }
 
-    @PostMapping("/studnet/profile/update")
-    public String updateProfile(@ModelAttribute Student studentForm, Principal principal){
+    @GetMapping("/student/profile")
+    public String studentProfile(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        Student student = studentDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
+        model.addAttribute("student", student);
+        model.addAttribute("memberSince", student.getCreatedAt() == null ? null
+                : student.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH)));
+        return "student/profile";
+    }
+
+    @GetMapping("/student/profile/edit")
+    public String editStudentProfile(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        Student student = studentDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
+        model.addAttribute("student", student);
+        return "student/edit-profile";
+    }
+
+    @PostMapping({"/student/profile/update", "/studnet/profile/update"})
+    public String updateProfile(@ModelAttribute Student studentForm,
+                                @RequestParam(required = false) String skillsInput,
+                                Principal principal){
         if (principal == null) return "redirect:/login";
 
         Student student = studentDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
@@ -54,8 +82,18 @@ public class StudentController {
         student.setDateOfBirth(studentForm.getDateOfBirth());
         student.setGender(studentForm.getGender());
 
+        if (skillsInput != null) {
+            List<String> skillList = Arrays.stream(skillsInput.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+            student.setSkills(skillList);
+        } else if (studentForm.getSkills() != null && !studentForm.getSkills().isEmpty()) {
+            student.setSkills(studentForm.getSkills());
+        }
+
         studentDao.save(student);
-        return "redirect:/student/dashboard?profile?updated";
+        return "redirect:/student/profile?success";
     }
 }
 

@@ -8,6 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="cp" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="studyYearLabel" value="${student.studyYear}"/>
+<c:choose>
+  <c:when test="${student.studyYear == '1'}"><c:set var="studyYearLabel" value="1st Year"/></c:when>
+  <c:when test="${student.studyYear == '2'}"><c:set var="studyYearLabel" value="2nd Year"/></c:when>
+  <c:when test="${student.studyYear == '3'}"><c:set var="studyYearLabel" value="3rd Year"/></c:when>
+  <c:when test="${student.studyYear == '4'}"><c:set var="studyYearLabel" value="4th Year"/></c:when>
+  <c:when test="${student.studyYear == '5+'}"><c:set var="studyYearLabel" value="5th Year+"/></c:when>
+  <c:when test="${student.studyYear == 'GRADUATE'}"><c:set var="studyYearLabel" value="Graduate"/></c:when>
+</c:choose>
+<c:set var="genderLabel" value="${student.gender}"/>
+<c:choose>
+  <c:when test="${student.gender == 'MALE'}"><c:set var="genderLabel" value="Male"/></c:when>
+  <c:when test="${student.gender == 'FEMALE'}"><c:set var="genderLabel" value="Female"/></c:when>
+  <c:when test="${student.gender == 'OTHER'}"><c:set var="genderLabel" value="Other"/></c:when>
+  <c:when test="${student.gender == 'PREFER_NOT_TO_SAY'}"><c:set var="genderLabel" value="Prefer not to say"/></c:when>
+</c:choose>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +44,144 @@
 
     <!-- css -->
     <link rel="stylesheet" href="${cp}/assets/css/dashboard.css">
+    <link rel="stylesheet" href="${cp}/assets/css/organizer.css">
+
+    <style>
+        .simple-profile {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            text-align: left !important;
+        }
+
+        .simple-profile-head {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 24px !important;
+            padding-bottom: 28px !important;
+            border-bottom: 1px solid #e5e7eb !important;
+        }
+
+        .simple-profile-photo {
+            flex: 0 0 auto !important;
+            width: 104px !important;
+            height: 104px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+        }
+
+        .simple-profile-identity {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            text-align: left !important;
+        }
+
+        .simple-profile-identity h1 {
+            font-family: "Poppins", sans-serif !important;
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            color: #111827 !important;
+            line-height: 1.25 !important;
+            margin: 0 0 6px 0 !important;
+        }
+
+        .simple-profile-role {
+            font-size: 17px !important;
+            color: #4b5563 !important;
+            margin: 0 0 6px 0 !important;
+        }
+
+        .simple-profile-status {
+            font-size: 15px !important;
+            color: #6b7280 !important;
+            margin: 0 !important;
+        }
+
+        .simple-profile-edit {
+            margin-left: auto !important;
+            flex: 0 0 auto !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            padding: 10px 20px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 8px !important;
+            background: #ffffff !important;
+            color: #111827 !important;
+            font-family: "Inter", sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            transition: background 0.15s ease !important;
+        }
+
+        .simple-profile-edit:hover {
+            background: #f3f4f6 !important;
+        }
+
+        .simple-section {
+            padding: 28px 0 !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            text-align: left !important;
+        }
+
+        .simple-section:last-child {
+            border-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        .simple-section h2 {
+            font-family: "Poppins", sans-serif !important;
+            font-size: 22px !important;
+            font-weight: 600 !important;
+            color: #111827 !important;
+            margin-bottom: 16px !important;
+        }
+
+        .simple-fields {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+            margin: 0 !important;
+        }
+
+        .simple-field {
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 30px !important;
+            font-size: 16.5px !important;
+            line-height: 1.6 !important;
+            margin: 0 !important;
+        }
+
+        .simple-field dt {
+            flex: 0 0 240px !important;
+            color: #6b7280 !important;
+            font-weight: 500 !important;
+            font-size: 16px !important;
+        }
+
+        .simple-field dd {
+            margin: 0 !important;
+            color: #111827 !important;
+            font-weight: 500 !important;
+            font-size: 16.5px !important;
+            overflow-wrap: anywhere !important;
+        }
+
+        .skill-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 14.5px;
+            font-weight: 500;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +194,7 @@
 <div class="main-area">
 
     <jsp:include page="student-topbar.jsp"></jsp:include>
-`
+
     <div class="content">
 
         <!-- PAGE: OVERVIEW -->
@@ -49,14 +203,14 @@
             <section class="hero-banner">
                 <div>
                     <span class="hero-tag">Your SkillBridge Space</span>
-                    <h1>Hey, Asha!</h1>
+                    <h1>Hey, ${empty student ? 'Student' : student.firstName}!</h1>
                     <p>Welcome back to your student dashboard. Here is what's happening with your applications and
                         workshops.</p>
                     <div class="hero-actions">
                         <a href="#" class="btn btn-primary btn-sm" onclick="openPage('browse'); return false;">
                             <i class="fa-solid fa-compass"></i> Browse Opportunities
                         </a>
-                        <a href="#" class="btn btn-ghost btn-sm" onclick="openPage('profile'); return false;">
+                        <a href="${cp}/student/profile" class="btn btn-ghost btn-sm">
                             <i class="fa-solid fa-user"></i> My Profile
                         </a>
                     </div>
@@ -81,14 +235,14 @@
                 <div class="stat-card">
                     <div class="stat-icon amber"><i class="fa-solid fa-graduation-cap"></i></div>
                     <div class="stat-info">
-                        <h3>Kathmandu University</h3>
+                        <h3>${empty student.college ? 'College' : student.college}</h3>
                         <p>College</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon red"><i class="fa-solid fa-calendar-days"></i></div>
                     <div class="stat-info">
-                        <h3>Oct 2026</h3>
+                        <h3>${empty memberSince ? 'Active' : memberSince}</h3>
                         <p>Member Since</p>
                     </div>
                 </div>
@@ -402,450 +556,118 @@
         </div>
 
         <!-- PAGE: MY PROFILE -->
-        <
         <div class="page" id="page-profile">
+            <div class="simple-profile">
 
-            <section class="profile-hero">
-                <div class="profile-avatar">${student.firstName.substring(0,1)}</div>
-                <div class="profile-hero-info">
-                    <span class="profile-hero-badge">Student</span>
-                    <h1>${student.firstName} ${student.lastName}</h1>
-                    <p id="hero-title">Full-stack Developer & UI/UX Enthusiast</p>
-                    <div class="profile-hero-meta">
-                        <span><i class="fa-solid fa-calendar-days"></i> Member since Oct 2026</span>
-                        <span><i class="fa-solid fa-user-graduate"></i> <span
-                                id="hero-degree">Year 3, Computer Science</span></span>
-                        <span><i class="fa-solid fa-location-dot"></i> <span id="hero-location">Kathmandu, Nepal</span></span>
-                    </div>
-                    <p class="profile-bio" id="hero-bio">
-                        Passionate about building user-friendly web applications and creating meaningful digital
-                        experiences.
-                        Currently focused on learning modern JavaScript frameworks and contributing to open-source
-                        projects.
-                    </p>
-                    <button class="btn btn-sm btn-outline"
-                            style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; margin-top: 12px;"
-                            onclick="editHero()">
-                        <i class="fa-solid fa-edit"></i> Edit Profile
-                    </button>
-                    <div id="hero-edit" class="edit-section"
-                         style="display: none; margin-top: 18px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
-                        <input type="text" id="hero-name-input" class="edit-input" placeholder="Full Name"
-                               value="Asha Rai">
-                        <input type="text" id="hero-title-input" class="edit-input" placeholder="Title"
-                               value="Full-stack Developer & UI/UX Enthusiast">
-                        <textarea id="hero-bio-input" class="edit-textarea" rows="3" placeholder="Bio">Passionate about building user-friendly web applications and creating meaningful digital experiences. Currently focused on learning modern JavaScript frameworks and contributing to open-source projects.</textarea>
-                        <div class="edit-actions">
-                            <button class="btn btn-sm btn-primary" onclick="saveHero()">
-                                <i class="fa-solid fa-check"></i> Save
-                            </button>
-                            <button class="btn btn-sm btn-outline" onclick="cancelHero()">
-                                <i class="fa-solid fa-times"></i> Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <header class="simple-profile-head">
+                    <img src="${cp}/assets/images/default-avatar.svg" alt="Profile picture" class="simple-profile-photo">
 
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-user"></i> Personal Information</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="togglePersonalEdit()">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
+                    <div class="simple-profile-identity">
+                        <h1>${student.firstName} ${student.lastName}</h1>
+                        <p class="simple-profile-role">${empty student.major ? 'Student' : student.major}<c:if test="${not empty studyYearLabel}"> &bull; ${studyYearLabel}</c:if></p>
+                        <p class="simple-profile-status">
+                            Active Student
+                            <c:if test="${not empty memberSince}">
+                                &middot; Member since ${memberSince}
+                            </c:if>
+                        </p>
                     </div>
-                </div>
-                <div class="profile-info-list" id="personal-info">
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span>Email</span>
-                        </div>
-                        <div class="profile-info-value" id="email-display">asha@example.com</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>Phone</span>
-                        </div>
-                        <div class="profile-info-value" id="phone-display">+977 9812345678</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                            <span>Institution</span>
-                        </div>
-                        <div class="profile-info-value" id="institution-display">Kathmandu University</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Course / Major</span>
-                        </div>
-                        <div class="profile-info-value" id="major-display">Computer Science</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            <span>Graduation Year</span>
-                        </div>
-                        <div class="profile-info-value" id="gradyear-display">2028</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <span>CGPA</span>
-                        </div>
-                        <div class="profile-info-value" id="cgpa-display">3.8 / 4.0</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-label">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <span>Location</span>
-                        </div>
-                        <div class="profile-info-value" id="location-display">Kathmandu, Nepal</div>
-                    </div>
-                </div>
-                <div id="personal-edit" class="edit-section" style="display: none; margin-top: 20px;">
-                    <div class="edit-grid">
-                        <div class="edit-field">
-                            <label>Email</label>
-                            <input type="email" id="email-input" class="edit-input" value="asha@example.com">
-                        </div>
-                        <div class="edit-field">
-                            <label>Phone</label>
-                            <input type="tel" id="phone-input" class="edit-input" value="+977 9812345678">
-                        </div>
-                        <div class="edit-field">
-                            <label>Institution</label>
-                            <input type="text" id="institution-input" class="edit-input" value="Kathmandu University">
-                        </div>
-                        <div class="edit-field">
-                            <label>Course / Major</label>
-                            <input type="text" id="major-input" class="edit-input" value="Computer Science">
-                        </div>
-                        <div class="edit-field">
-                            <label>Graduation Year</label>
-                            <input type="text" id="gradyear-input" class="edit-input" value="2028">
-                        </div>
-                        <div class="edit-field">
-                            <label>CGPA</label>
-                            <input type="text" id="cgpa-input" class="edit-input" value="3.8 / 4.0">
-                        </div>
-                        <div class="edit-field" style="grid-column: 1 / -1;">
-                            <label>Location</label>
-                            <input type="text" id="location-input" class="edit-input" value="Kathmandu, Nepal">
-                        </div>
-                    </div>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="savePersonalInfo()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelPersonalEdit()">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-tags"></i> Technical Skills</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('skills')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="skill-tags" id="skills-list">
-                    <span class="skill-tag">Web Development</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">React</span>
-                    <span class="skill-tag">Next.js</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">Figma</span>
-                    <span class="skill-tag">Git & GitHub</span>
-                    <span class="skill-tag">Tailwind CSS</span>
-                </div>
-                <div id="skills-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="skills-input" class="edit-textarea" rows="3"
-                    placeholder="Enter skills separated by commas (e.g., React, Node.js, Python)"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveSkills()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('skills')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
+                    <a href="${cp}/student/profile/edit" class="simple-profile-edit">
+                        <i class="fa-solid fa-pen"></i> Edit Profile
+                    </a>
+                </header>
 
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-briefcase"></i> Education</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('education')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="profile-list" id="education-list">
-                    <div class="profile-item">
-                        <div class="profile-item-icon">
-                            <i class="fa-solid fa-graduation-cap"></i>
+                <section class="simple-section">
+                    <h2>Academic Details</h2>
+                    <dl class="simple-fields">
+                        <div class="simple-field">
+                            <dt>College / University</dt>
+                            <dd>${empty student.college ? '—' : student.college}</dd>
                         </div>
-                        <div class="profile-item-content">
-                            <h4>Bachelor of Computer Science</h4>
-                            <p>Kathmandu University - School of Engineering</p>
-                            <div class="profile-item-meta">
-                                <span><i class="fa-solid fa-calendar"></i> 2024 - Present</span>
-                                <span><i class="fa-solid fa-location-dot"></i> Dhulikhel, Nepal</span>
-                                <span><i class="fa-solid fa-star"></i> CGPA: 3.8/4.0</span>
+
+                        <div class="simple-field">
+                            <dt>Course / Major</dt>
+                            <dd>${empty student.major ? '—' : student.major}</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Year of Study</dt>
+                            <dd>${empty studyYearLabel ? '—' : studyYearLabel}</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Graduation Year</dt>
+                            <dd>${empty student.graduationYear ? '—' : student.graduationYear}</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="simple-section">
+                    <h2>Personal Details</h2>
+                    <dl class="simple-fields">
+                        <div class="simple-field">
+                            <dt>Full Name</dt>
+                            <dd>${student.firstName} ${student.lastName}</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Date of Birth</dt>
+                            <dd>${empty student.dateOfBirth ? '—' : student.dateOfBirth}</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Gender</dt>
+                            <dd>${empty genderLabel ? '—' : genderLabel}</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Account Status</dt>
+                            <dd>Active Student</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Member Since</dt>
+                            <dd>${empty memberSince ? '—' : memberSince}</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="simple-section">
+                    <h2>Contact Information</h2>
+                    <dl class="simple-fields">
+                        <div class="simple-field">
+                            <dt>Email</dt>
+                            <dd>${student.email}</dd>
+                        </div>
+
+                        <div class="simple-field">
+                            <dt>Phone</dt>
+                            <dd>${empty student.phone ? '—' : student.phone}</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="simple-section">
+                    <h2>Skills</h2>
+                    <c:choose>
+                        <c:when test="${not empty student.skills}">
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+                                <c:forEach var="sk" items="${student.skills}">
+                                    <span class="skill-chip"><c:out value="${sk}"/></span>
+                                </c:forEach>
                             </div>
-                        </div>
-                    </div>
-                    <div class="profile-item">
-                        <div class="profile-item-icon">
-                            <i class="fa-solid fa-school"></i>
-                        </div>
-                        <div class="profile-item-content">
-                            <h4>Higher Secondary Education (+2)</h4>
-                            <p>St. Xavier's College</p>
-                            <div class="profile-item-meta">
-                                <span><i class="fa-solid fa-calendar"></i> 2022 - 2024</span>
-                                <span><i class="fa-solid fa-location-dot"></i> Kathmandu, Nepal</span>
-                                <span><i class="fa-solid fa-award"></i> Grade: A</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="education-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="education-input" class="edit-textarea" rows="6"
-                    placeholder="Enter education details (e.g., Degree | School | Year | Location | Grade)"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveEducation()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('education')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <p style="color: #6b7280;">No skills added yet.</p>
+                        </c:otherwise>
+                    </c:choose>
+                </section>
 
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-lightbulb"></i> Projects</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('projects')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="profile-list" id="projects-list">
-                    <div class="profile-item">
-                        <div class="profile-item-icon">
-                            <i class="fa-solid fa-code"></i>
-                        </div>
-                        <div class="profile-item-content">
-                            <h4>SkillBridge - Career Platform</h4>
-                            <p>A full-stack platform connecting students with internships and workshops. Built with
-                                modern web
-                                technologies.</p>
-                            <div class="profile-item-meta">
-                                <span><i class="fa-solid fa-tags"></i> HTML, CSS, JavaScript</span>
-                                <span><i class="fa-solid fa-calendar"></i> Oct 2026</span>
-                            </div>
-                            <a href="#" class="profile-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> View
-                                Project</a>
-                        </div>
-                    </div>
-                    <div class="profile-item">
-                        <div class="profile-item-icon">
-                            <i class="fa-solid fa-laptop-code"></i>
-                        </div>
-                        <div class="profile-item-content">
-                            <h4>Task Management App</h4>
-                            <p>Responsive task manager with drag-and-drop functionality and local storage
-                                integration.</p>
-                            <div class="profile-item-meta">
-                                <span><i class="fa-solid fa-tags"></i> React, Tailwind CSS</span>
-                                <span><i class="fa-solid fa-calendar"></i> Sep 2026</span>
-                            </div>
-                            <a href="#" class="profile-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> View
-                                Project</a>
-                        </div>
-                    </div>
-                </div>
-                <div id="projects-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="projects-input" class="edit-textarea" rows="6"
-                    placeholder="Enter project details (name | description | tech | date | link)"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveProjects()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('projects')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
             </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-certificate"></i> Certifications & Achievements</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('certifications')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="profile-list" id="certifications-list">
-                    <div class="profile-item">
-                        <div class="profile-item-icon">
-                            <i class="fa-solid fa-trophy"></i>
-                        </div>
-                        <div class="profile-item-content">
-                            <h4>Web Development Fundamentals</h4>
-                            <p>FreeCodeCamp</p>
-                            <div class="profile-item-meta">
-                                <span><i class="fa-solid fa-calendar"></i> August 2026</span>
-                                <span><i class="fa-solid fa-clock"></i> 300+ hours</span>
-                            </div>
-                            <span class="certification-badge"><i class="fa-solid fa-check-circle"></i> Verified</span>
-                        </div>
-                    </div>
-                    <div class="profile-item">
-                        <div class="profile-item-icon">
-                            <i class="fa-solid fa-medal"></i>
-                        </div>
-                        <div class="profile-item-content">
-                            <h4>Hackathon Participant</h4>
-                            <p>KU Tech Fest 2026</p>
-                            <div class="profile-item-meta">
-                                <span><i class="fa-solid fa-calendar"></i> May 2026</span>
-                                <span><i class="fa-solid fa-users"></i> Team Project</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="certifications-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="certifications-input" class="edit-textarea" rows="6"
-                    placeholder="Enter certifications (name | issuer | date | details)"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveCertifications()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('certifications')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-language"></i> Languages</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('languages')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="language-list" id="languages-list">
-                    <div class="language-item">
-                        <strong>Nepali</strong>
-                        <span>Native</span>
-                    </div>
-                    <div class="language-item">
-                        <strong>English</strong>
-                        <span>Professional Working</span>
-                    </div>
-                    <div class="language-item">
-                        <strong>Hindi</strong>
-                        <span>Conversational</span>
-                    </div>
-                </div>
-                <div id="languages-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="languages-input" class="edit-textarea" rows="3"
-                    placeholder="Enter languages (e.g., Nepali: Native, English: Fluent)"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveLanguages()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('languages')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-heart"></i> Interests & Hobbies</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('interests')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="skill-tags" id="interests-list">
-                    <span class="skill-tag">Open Source</span>
-                    <span class="skill-tag">UI/UX Design</span>
-                    <span class="skill-tag">Photography</span>
-                    <span class="skill-tag">Reading</span>
-                    <span class="skill-tag">Travel</span>
-                    <span class="skill-tag">Music</span>
-                </div>
-                <div id="interests-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="interests-input" class="edit-textarea" rows="2"
-                    placeholder="Enter interests separated by commas"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveInterests()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('interests')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-link"></i> Connect & Links</h2>
-                    <div class="panel-actions">
-                        <button class="btn btn-sm btn-outline" onclick="editSection('links')">
-                            <i class="fa-solid fa-edit"></i> Edit
-                        </button>
-                    </div>
-                </div>
-                <div class="social-links" id="links-list">
-                    <a href="#" class="social-link"><i class="fa-brands fa-github"></i> GitHub</a>
-                    <a href="#" class="social-link"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-                    <a href="#" class="social-link"><i class="fa-brands fa-behance"></i> Behance</a>
-                    <a href="#" class="social-link"><i class="fa-solid fa-globe"></i> Portfolio</a>
-                    <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i> X (Twitter)</a>
-                </div>
-                <div id="links-edit" class="edit-section" style="display: none; margin-top: 18px;">
-          <textarea id="links-input" class="edit-textarea" rows="4"
-                    placeholder="Enter links (e.g., GitHub: https://github.com/username)"></textarea>
-                    <div class="edit-actions">
-                        <button class="btn btn-sm btn-primary" onclick="saveLinks()">
-                            <i class="fa-solid fa-check"></i> Save
-                        </button>
-                        <button class="btn btn-sm btn-outline" onclick="cancelEdit('links')">
-                            <i class="fa-solid fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+
 
     </div>
 </div>

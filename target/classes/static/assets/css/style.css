@@ -140,7 +140,7 @@ body{
 }
 
 .navbar.open .hamburger .close{
-    display: block;   
+    display: block;
 }
 
 .mobile-menu{
@@ -231,7 +231,7 @@ body{
 
 .mobile-menu .dropdown-menu{
     display: none;
-    
+
 }
 
 .mobile-menu .dropdown{
@@ -1302,7 +1302,7 @@ body{
     text-transform: uppercase;
     padding: 6px 12px;
     border-radius: 999px;
-     background: #e8f3ff;
+    background: #e8f3ff;
     color: #2e55ee;
 }
 

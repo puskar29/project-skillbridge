@@ -27,6 +27,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     @GetMapping("/signup")
     public String signupPage() {
         return "signup";

@@ -67,13 +67,13 @@
     <li class="sidebar-heading">Review</li>
 
     <li class="nav-item ${ap == 'applications' ? 'active' : ''}">
-      <a href="${cp}/applications" class="nav-link ${ap == 'applications' ? 'active' : ''}">
+      <a href="${cp}/organizer/applications" class="nav-link ${ap == 'applications' ? 'active' : ''}">
         <i class="fa-solid fa-file-lines"></i><span>Applications</span>
       </a>
     </li>
 
     <li class="nav-item ${ap == 'registrations' ? 'active' : ''}">
-      <a href="${cp}/registrations" class="nav-link ${ap == 'registrations' ? 'active' : ''}">
+      <a href="${cp}/organizer/registrations" class="nav-link ${ap == 'registrations' ? 'active' : ''}">
         <i class="fa-solid fa-clipboard-check"></i><span>Registrations</span>
       </a>
     </li>

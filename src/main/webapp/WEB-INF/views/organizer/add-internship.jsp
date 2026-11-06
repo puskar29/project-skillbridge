@@ -206,7 +206,7 @@
 
             <div class="field">
               <label for="intTitle">Internship Title <span class="required">*</span></label>
-              <input type="text" id="intTitle" name="title" placeholder="Frontend Developer Intern" required>
+              <input type="text" id="intTitle" name="title" placeholder="Enter internship title" required>
             </div>
 
             <div class="form-row">

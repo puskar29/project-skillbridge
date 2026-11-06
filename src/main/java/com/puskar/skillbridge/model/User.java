@@ -64,6 +64,9 @@ public class User implements Serializable {
     @Column(name = "profile_image", length = 255)
     private String profileImage;
 
+    @Column(name = "resume_file", length = 255)
+    private String resumeFile;
+
     public User() {
     }
 
@@ -176,5 +179,13 @@ public class User implements Serializable {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public String getResumeFile() {
+        return resumeFile;
+    }
+
+    public void setResumeFile(String resumeFile) {
+        this.resumeFile = resumeFile;
     }
 }

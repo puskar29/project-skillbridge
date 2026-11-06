@@ -43,7 +43,7 @@
       <a href="${cp}/home" class="view-site" target="_blank">
         <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
       </a>
-      <div class="admin-avatar" title="Admin">A</div>
+      <img src="${cp}/assets/images/pfp.png" class="admin-avatar" alt="Admin profile picture">
       <button class="hamburger-btn" onclick="openSidebar()" aria-label="Toggle sidebar">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -55,7 +55,7 @@
       <div class="panel-header">
         <h2>Registered Organizers</h2>
         <div class="panel-actions">
-          <span class="text-sm text-gray-500">Frontend demo — backend coming soon</span>
+          <span class="text-sm text-gray-500">Organizer management</span>
         </div>
       </div>
       <div class="overflow-x-auto">
@@ -71,45 +71,36 @@
           </tr>
           </thead>
           <tbody id="organizersBody">
-          <tr data-id="1" data-status="pending">
-            <td><strong>Himalayan Labs</strong></td>
-            <td>contact@himalayanlabs.com</td>
-            <td>Himalayan Labs Pvt. Ltd.</td>
-            <td>Oct 10, 2026</td>
-            <td><span class="status-pending">Pending</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap">
-                <button type="button" title="Approve" class="grid h-8 w-8 place-items-center rounded-lg border border-emerald-500 bg-emerald-500 text-white" onclick="openConfirm('Approve organizer?', 'Approve this organizer to publish opportunities?', function(){ approveOrganizer(1); })"><i class="fa-solid fa-check"></i></button>
-                <button type="button" title="Reject" class="grid h-8 w-8 place-items-center rounded-lg border border-red-500 text-red-500 hover:bg-red-50" onclick="openConfirm('Reject organizer?', 'Reject this organizer registration?', function(){ rejectOrganizer(1); })"><i class="fa-solid fa-xmark"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="2" data-status="approved">
-            <td><strong>Code Himalaya</strong></td>
-            <td>info@codehimalaya.org</td>
-            <td>Code Himalaya</td>
-            <td>Oct 08, 2026</td>
-            <td><span class="status-approved">Approved</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap">
-                <button type="button" title="View" class="grid h-8 w-8 place-items-center rounded-lg border border-[#90caf9] bg-white text-[#546e7e]"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" title="Revoke" class="grid h-8 w-8 place-items-center rounded-lg border border-red-500 text-red-500 hover:bg-red-50" onclick="openConfirm('Revoke organizer?', 'Revoke this organizer account?', function(){ rejectOrganizer(2); })"><i class="fa-solid fa-ban"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="3" data-status="pending">
-            <td><strong>Tech Valley</strong></td>
-            <td>hello@techvalley.com</td>
-            <td>Tech Valley Pvt. Ltd.</td>
-            <td>Oct 05, 2026</td>
-            <td><span class="status-pending">Pending</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap">
-                <button type="button" title="Approve" class="grid h-8 w-8 place-items-center rounded-lg border border-emerald-500 bg-emerald-500 text-white" onclick="openConfirm('Approve organizer?', 'Approve this organizer to publish opportunities?', function(){ approveOrganizer(3); })"><i class="fa-solid fa-check"></i></button>
-                <button type="button" title="Reject" class="grid h-8 w-8 place-items-center rounded-lg border border-red-500 text-red-500 hover:bg-red-50" onclick="openConfirm('Reject organizer?', 'Reject this organizer registration?', function(){ rejectOrganizer(3); })"><i class="fa-solid fa-xmark"></i></button>
-              </div>
-            </td>
-          </tr>
+          <c:forEach items="${organizers}" var="organizer">
+            <tr>
+              <td><strong><c:out value="${organizer.firstName}"/> <c:out value="${organizer.lastName}"/></strong></td>
+              <td><c:out value="${organizer.email}"/></td>
+              <td><c:out value="${organizer.organizationName}"/></td>
+              <td><c:out value="${organizer.createdAt}"/></td>
+              <td>
+                <c:choose>
+                  <c:when test="${organizer.approved}"><span class="status-approved">Approved</span></c:when>
+                  <c:when test="${not organizer.enabled}"><span class="status-rejected">Rejected</span></c:when>
+                  <c:otherwise><span class="status-pending">Pending</span></c:otherwise>
+                </c:choose>
+              </td>
+              <td>
+                <div class="flex items-center gap-1.5 whitespace-nowrap">
+                  <form method="post" action="${cp}/admin/organizers/${organizer.id}/status" style="display:inline">
+                    <input type="hidden" name="approved" value="true">
+                    <button type="submit" title="Approve" class="grid h-8 w-8 place-items-center rounded-lg border border-emerald-500 bg-emerald-500 text-white"><i class="fa-solid fa-check"></i></button>
+                  </form>
+                  <form method="post" action="${cp}/admin/organizers/${organizer.id}/status" style="display:inline">
+                    <input type="hidden" name="approved" value="false">
+                    <button type="submit" title="Reject" class="grid h-8 w-8 place-items-center rounded-lg border border-red-500 text-red-500 hover:bg-red-50"><i class="fa-solid fa-xmark"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </c:forEach>
+          <c:if test="${empty organizers}">
+            <tr><td colspan="6">No organizer registrations found.</td></tr>
+          </c:if>
           </tbody>
         </table>
       </div>
@@ -125,26 +116,5 @@
 </div>
 
 <script src="${cp}/assets/js/admin.js"></script>
-<script>
-  function updateStatus(id, status) {
-    const row = document.querySelector('[data-id="' + id + '"]');
-    if (!row) return;
-    row.dataset.status = status;
-    const cell = row.querySelector('td:nth-child(5)');
-    if (cell) {
-      const cls = status === 'approved' ? 'status-approved' : (status === 'rejected' ? 'status-rejected' : 'status-pending');
-      const label = status.charAt(0).toUpperCase() + status.slice(1);
-      cell.innerHTML = '<span class="' + cls + '">' + label + '</span>';
-    }
-  }
-  function approveOrganizer(id) {
-    updateStatus(id, 'approved');
-    if (typeof showToast === 'function') showToast('Organizer approved');
-  }
-  function rejectOrganizer(id) {
-    updateStatus(id, 'rejected');
-    if (typeof showToast === 'function') showToast('Organizer rejected');
-  }
-</script>
 </body>
 </html>

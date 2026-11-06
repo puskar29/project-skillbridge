@@ -85,8 +85,6 @@
 </head>
 
 <body>
-<!-- Demo data — hardcoded, localStorage keeps your edits -->
-
 <!-- Dark background that appears behind the menu on small screens -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 

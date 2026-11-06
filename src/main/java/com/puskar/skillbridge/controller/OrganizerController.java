@@ -1,14 +1,13 @@
 package com.puskar.skillbridge.controller;
 
+import com.puskar.skillbridge.dao.ApplicationDao;
 import com.puskar.skillbridge.dao.OrganizerDao;
-import com.puskar.skillbridge.model.Organizer;
+import com.puskar.skillbridge.dao.RegistrationDao;
+import com.puskar.skillbridge.model.*;
 import com.puskar.skillbridge.service.UploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
@@ -22,12 +21,15 @@ public class OrganizerController {
 
     private final UploadService uploadService;
 
-    public OrganizerController(
-            OrganizerDao organizerDao,
-            UploadService uploadService) {
+    private final ApplicationDao applicationDao;
 
+    private final RegistrationDao registrationDao;
+
+    public OrganizerController(OrganizerDao organizerDao, UploadService uploadService, ApplicationDao applicationDao, RegistrationDao registrationDao) {
         this.organizerDao = organizerDao;
         this.uploadService = uploadService;
+        this.applicationDao = applicationDao;
+        this.registrationDao = registrationDao;
     }
 
     @GetMapping("/organizer/home")
@@ -36,7 +38,13 @@ public class OrganizerController {
         model.addAttribute("username", username);
         if (principal != null) {
             organizerDao.findByEmailIgnoreCase(principal.getName())
-                    .ifPresent(org -> model.addAttribute("organizer", org));
+                    .ifPresent(org -> {
+                        model.addAttribute("organizer", org);
+                        model.addAttribute("applications",
+                                applicationDao.findByInternshipOrganizerIdOrderByAppliedAtDesc(org.getId()));
+                        model.addAttribute("registrations",
+                                registrationDao.findByWorkshopOrganizerAccountIdOrderByRegisteredAtDesc(org.getId()));
+                    });
         }
         return "organizer/dashboard";
     }
@@ -102,5 +110,79 @@ public class OrganizerController {
         }
 
         return "redirect:/organizer/profile";
+    }
+
+    @GetMapping("/organizer/applications")
+    public String applications(Model model, Principal principal) {
+
+        Organizer organizer = organizerDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        model.addAttribute(
+                "applications",
+                applicationDao.findByInternshipOrganizerIdOrderByAppliedAtDesc(
+                        organizer.getId()
+                )
+        );
+
+        return "organizer/applications";
+    }
+
+    @PostMapping("/organizer/applications/{id}/status")
+    public String updateApplicationStatus(
+            @PathVariable Long id,
+            @RequestParam ApplicationStatus status,
+            Principal principal) {
+
+        Organizer organizer = organizerDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        Application application = applicationDao
+                .findByIdAndInternshipOrganizerId(id, organizer.getId())
+                .orElseThrow();
+
+        application.setStatus(status);
+        applicationDao.save(application);
+
+        return "redirect:/organizer/applications";
+    }
+
+    @GetMapping("/organizer/registrations")
+    public String registrations(Model model, Principal principal) {
+
+        Organizer organizer = organizerDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        model.addAttribute(
+                "registrations",
+                registrationDao.findByWorkshopOrganizerAccountIdOrderByRegisteredAtDesc(
+                        organizer.getId()
+                )
+        );
+
+        return "organizer/registrations";
+    }
+
+    @PostMapping("/organizer/registrations/{id}/status")
+    public String updateRegistrationStatus(
+            @PathVariable Long id,
+            @RequestParam RegistrationStatus status,
+            Principal principal) {
+
+        Organizer organizer = organizerDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        Registration registration = registrationDao
+                .findByIdAndWorkshopOrganizerAccountId(id, organizer.getId())
+                .orElseThrow();
+
+        registration.setStatus(status);
+        registrationDao.save(registration);
+
+        return "redirect:/organizer/registrations";
     }
 }

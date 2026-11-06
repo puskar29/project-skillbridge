@@ -40,13 +40,13 @@ public class AuthController {
 
     @PostMapping("/auth/register")
     public String register(
-            @RequestParam String role,
-            @RequestParam("first_name") String firstName,
-            @RequestParam("last_name") String lastName,
-            @RequestParam String email,
+            @RequestParam(defaultValue = "STUDENT") String role,
+            @RequestParam(name = "first_name", defaultValue = "") String firstName,
+            @RequestParam(name = "last_name", defaultValue = "") String lastName,
+            @RequestParam(defaultValue = "") String email,
             @RequestParam(required = false) String phone,
-            @RequestParam String password,
-            @RequestParam("confirm_password") String confirmPassword,
+            @RequestParam(defaultValue = "") String password,
+            @RequestParam(name = "confirm_password", defaultValue = "") String confirmPassword,
             @RequestParam(required = false) String dob,
             @RequestParam(required = false) String gender,
             @RequestParam(required = false) String college,
@@ -64,8 +64,17 @@ public class AuthController {
         boolean organizerSignup = "ORGANIZER".equalsIgnoreCase(role);
         String selectedRole = organizerSignup ? "ORGANIZER" : "STUDENT";
 
-        if (cleanEmail.isBlank() || password == null || password.isBlank()) {
+        if (!"STUDENT".equalsIgnoreCase(role) && !organizerSignup) {
+            return "redirect:/signup?error=role&role=STUDENT";
+        }
+
+        if (firstName.trim().isBlank() || lastName.trim().isBlank()
+                || cleanEmail.isBlank() || password.isBlank()) {
             return "redirect:/signup?error=required&role=" + selectedRole;
+        }
+
+        if (password.length() < 8) {
+            return "redirect:/signup?error=password-length&role=" + selectedRole;
         }
 
         if (userDao.existsByEmailIgnoreCase(cleanEmail)) {
@@ -76,7 +85,9 @@ public class AuthController {
             return "redirect:/signup?error=password&role=" + selectedRole;
         }
 
-        if (organizerSignup && (organizationName == null || organizationName.isBlank())) {
+        if (organizerSignup && (organizationName == null || organizationName.isBlank()
+                || organizationType == null || organizationType.isBlank()
+                || position == null || position.isBlank())) {
             return "redirect:/signup?error=organization&role=ORGANIZER";
         }
 

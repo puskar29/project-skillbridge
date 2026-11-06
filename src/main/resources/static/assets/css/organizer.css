@@ -581,6 +581,59 @@ body {
 .status-draft      { color: var(--ink-soft); }
 .status-active     { color: var(--brand); }
 
+.decision-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.decision-form {
+    margin: 0;
+}
+
+.decision-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 94px;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.decision-btn:hover {
+    transform: translateY(-1px);
+}
+
+.decision-approve {
+    border-color: #a7f3d0;
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.decision-approve:hover {
+    background: #d1fae5;
+    box-shadow: 0 5px 12px rgba(16, 185, 129, 0.18);
+}
+
+.decision-reject {
+    border-color: #fecaca;
+    background: #fff1f2;
+    color: #be123c;
+}
+
+.decision-reject:hover {
+    background: #ffe4e6;
+    box-shadow: 0 5px 12px rgba(244, 63, 94, 0.16);
+}
+
 .status-open::before,
 .status-closed::before,
 .status-pending::before,

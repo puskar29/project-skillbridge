@@ -14,11 +14,9 @@
     }
 
     /**
-     * The backend controller is not connected yet, so the form shows a
-     * confirmation instead of posting. Change this to false after
-     * AuthController#register (POST /auth/register) is implemented.
+     * Keep this disabled so registration posts to the backend.
      */
-    const DEMO_MODE = false;
+    const CLIENT_ONLY_MODE = false;
 
     const roleSelect = form.querySelector('select[name="role"]');
     const panels = form.querySelectorAll("[data-role-panel]");
@@ -210,7 +208,7 @@
             return;
         }
 
-        if (DEMO_MODE) {
+        if (CLIENT_ONLY_MODE) {
             window.alert(
                 "Front-end check passed. Connect POST /auth/register to save this " +
                 getRole().toLowerCase() + " account."
@@ -271,7 +269,9 @@
         const errorFields = {
             email: ["email", "An account with this email already exists."],
             password: ["confirm_password", "Passwords do not match."],
+            "password-length": ["password", "Password must be at least 8 characters."],
             organization: ["organization_name", "Organization name is required."],
+            role: ["role", "Please select a valid account type."],
             dob: ["dob", "Please enter a valid date of birth."],
             required: ["email", "Please fill in all required fields."]
         };

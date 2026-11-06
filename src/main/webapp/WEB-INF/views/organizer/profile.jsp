@@ -225,7 +225,7 @@
                  class="simple-profile-photo">
           </c:when>
           <c:otherwise>
-            <img src="${cp}/assets/images/default-avatar.svg"
+            <img src="${cp}/assets/images/pfp.png"
                  alt="Default profile picture"
                  class="simple-profile-photo">
           </c:otherwise>

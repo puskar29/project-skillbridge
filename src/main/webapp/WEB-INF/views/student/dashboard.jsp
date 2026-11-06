@@ -185,7 +185,6 @@
 </head>
 
 <body>
-<!-- Demo data — hardcoded static page, fill from your endpoint when dynamic -->
 <jsp:include page="student-sidebar.jsp">
     <jsp:param name="activePage" value="overview"/>
 </jsp:include>
@@ -221,14 +220,14 @@
                 <div class="stat-card">
                     <div class="stat-icon blue"><i class="fa-solid fa-briefcase"></i></div>
                     <div class="stat-info">
-                        <h3>3</h3>
+                        <h3>${empty applications ? 0 : applications.size()}</h3>
                         <p>Applications Sent</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon green"><i class="fa-solid fa-clipboard-check"></i></div>
                     <div class="stat-info">
-                        <h3>2</h3>
+                        <h3>${empty registrations ? 0 : registrations.size()}</h3>
                         <p>Workshop Registrations</p>
                     </div>
                 </div>
@@ -268,24 +267,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><strong>Frontend Developer Intern</strong></td>
-                            <td>Himalayan Labs</td>
-                            <td>Oct 04, 2026</td>
-                            <td><span class="status-pending">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Data Analyst Intern</strong></td>
-                            <td>Everest Analytics</td>
-                            <td>Sep 27, 2026</td>
-                            <td><span class="status-accepted">Accepted</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>UI/UX Design Intern</strong></td>
-                            <td>Craft Nepal</td>
-                            <td>Sep 15, 2026</td>
-                            <td><span class="status-pending">Pending</span></td>
-                        </tr>
+                        <c:forEach items="${applications}" var="application" varStatus="loop">
+                            <c:if test="${loop.index < 3}">
+                                <tr>
+                                    <td><strong><c:out value="${application.internship.title}"/></strong></td>
+                                    <td><c:out value="${application.internship.company}"/></td>
+                                    <td><c:out value="${application.appliedAt}"/></td>
+                                    <td><span class="status-${application.status.name().toLowerCase()}"><c:out value="${application.status}"/></span></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${empty applications}">
+                            <tr><td colspan="4">You have not applied to any internships yet.</td></tr>
+                        </c:if>
                         </tbody>
                     </table>
                 </div>
@@ -311,18 +305,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><strong>Web Development Bootcamp</strong></td>
-                            <td>Himalayan Labs</td>
-                            <td>Oct 01, 2026</td>
-                            <td><span class="status-confirmed">Confirmed</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Data Science with Python</strong></td>
-                            <td>Everest Analytics</td>
-                            <td>Sep 20, 2026</td>
-                            <td><span class="status-confirmed">Confirmed</span></td>
-                        </tr>
+                        <c:forEach items="${registrations}" var="registration" varStatus="loop">
+                            <c:if test="${loop.index < 3}">
+                                <tr>
+                                    <td><strong><c:out value="${registration.workshop.title}"/></strong></td>
+                                    <td><c:out value="${registration.workshop.organizer}"/></td>
+                                    <td><c:out value="${registration.registeredAt}"/></td>
+                                    <td><span class="status-${registration.status.name().toLowerCase()}"><c:out value="${registration.status}"/></span></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${empty registrations}">
+                            <tr><td colspan="4">You have not registered for any workshops yet.</td></tr>
+                        </c:if>
                         </tbody>
                     </table>
                 </div>
@@ -332,154 +327,69 @@
 
         <!-- PAGE: BROWSE & APPLY -->
         <div class="page" id="page-browse">
-
             <div class="panel">
                 <div class="panel-header">
                     <h2>Open Internships</h2>
-                    <div class="panel-actions">
-                        <span class="badge badge-internship">3 Available</span>
-                    </div>
+                    <span class="badge badge-internship">${empty internships ? 0 : internships.size()} Available</span>
                 </div>
                 <div class="browse-grid">
-
-                    <!-- already applied — the POST form is gone in the static version -->
-                    <div class="browse-card">
-                        <div class="browse-top">
-                            <span class="badge badge-internship">Internship</span>
-                            <span class="browse-loc"><i class="fa-solid fa-location-dot"></i> Kathmandu</span>
+                    <c:forEach items="${internships}" var="intern">
+                        <div class="browse-card">
+                            <div class="browse-top">
+                                <span class="badge badge-internship">Internship</span>
+                                <span class="browse-loc"><i class="fa-solid fa-location-dot"></i> <c:out value="${intern.location}"/></span>
+                            </div>
+                            <h3 class="browse-title"><c:out value="${intern.title}"/></h3>
+                            <p class="browse-sub"><c:out value="${intern.company}"/></p>
+                            <div class="browse-meta">
+                                <span><i class="fa-solid fa-briefcase"></i> <c:out value="${intern.type != null ? intern.type.displayName : 'Internship'}"/></span>
+                                <span><i class="fa-regular fa-clock"></i> <c:out value="${intern.duration}"/></span>
+                            </div>
+                            <div class="browse-footer">
+                                <span class="browse-deadline"><i class="fa-regular fa-calendar"></i> Deadline <c:out value="${intern.deadline}"/></span>
+                                <form method="post" action="${cp}/student/internships/${intern.id}/apply">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-paper-plane"></i> Apply</button>
+                                </form>
+                            </div>
                         </div>
-                        <h3 class="browse-title">Frontend Developer Intern</h3>
-                        <p class="browse-sub">Himalayan Labs</p>
-                        <div class="browse-meta">
-                            <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-                            <span><i class="fa-regular fa-clock"></i> 3 months</span>
-                            <span><i class="fa-solid fa-coins"></i> NPR 25,000 / month</span>
-                        </div>
-                        <div class="browse-footer">
-                            <span class="browse-deadline"><i
-                                    class="fa-regular fa-calendar"></i> Deadline Nov 30, 2026</span>
-                            <span class="badge badge-applied"><i class="fa-solid fa-check"></i> Applied</span>
-                        </div>
-                    </div>
-
-                    <div class="browse-card">
-                        <div class="browse-top">
-                            <span class="badge badge-internship">Internship</span>
-                            <span class="browse-loc"><i class="fa-solid fa-location-dot"></i> Remote</span>
-                        </div>
-                        <h3 class="browse-title">Backend Developer Intern</h3>
-                        <p class="browse-sub">Sagarmatha Soft</p>
-                        <div class="browse-meta">
-                            <span><i class="fa-solid fa-briefcase"></i> Full Time</span>
-                            <span><i class="fa-regular fa-clock"></i> 6 months</span>
-                            <span><i class="fa-solid fa-coins"></i> NPR 35,000 / month</span>
-                        </div>
-                        <div class="browse-footer">
-                            <span class="browse-deadline"><i
-                                    class="fa-regular fa-calendar"></i> Deadline Dec 15, 2026</span>
-                            <button class="btn btn-primary btn-sm"><i class="fa-solid fa-paper-plane"></i> Apply
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="browse-card">
-                        <div class="browse-top">
-                            <span class="badge badge-internship">Internship</span>
-                            <span class="browse-loc"><i class="fa-solid fa-location-dot"></i> Kathmandu</span>
-                        </div>
-                        <h3 class="browse-title">Data Analyst Intern</h3>
-                        <p class="browse-sub">Everest Analytics</p>
-                        <div class="browse-meta">
-                            <span><i class="fa-solid fa-briefcase"></i> Part Time</span>
-                            <span><i class="fa-regular fa-clock"></i> 4 months</span>
-                            <span><i class="fa-solid fa-coins"></i> NPR 20,000 / month</span>
-                        </div>
-                        <div class="browse-footer">
-                            <span class="browse-deadline"><i
-                                    class="fa-regular fa-calendar"></i> Deadline Jan 20, 2027</span>
-                            <span class="badge badge-applied"><i class="fa-solid fa-check"></i> Applied</span>
-                        </div>
-                    </div>
-
+                    </c:forEach>
+                    <c:if test="${empty internships}"><p>No internships are available right now.</p></c:if>
                 </div>
             </div>
 
             <div class="panel">
                 <div class="panel-header">
                     <h2>Open Workshops</h2>
-                    <div class="panel-actions">
-                        <span class="badge badge-workshop">3 Available</span>
-                    </div>
+                    <span class="badge badge-workshop">${empty workshops ? 0 : workshops.size()} Available</span>
                 </div>
                 <div class="browse-grid">
-
-                    <div class="browse-card">
-                        <div class="browse-top">
-                            <span class="badge badge-workshop">Workshop</span>
-                            <span class="browse-loc"><i
-                                    class="fa-solid fa-calendar-days"></i> Starts Nov 14, 2026</span>
+                    <c:forEach items="${workshops}" var="workshop">
+                        <div class="browse-card">
+                            <div class="browse-top">
+                                <span class="badge badge-workshop">Workshop</span>
+                                <span class="browse-loc"><i class="fa-solid fa-location-dot"></i> <c:out value="${workshop.location}"/></span>
+                            </div>
+                            <h3 class="browse-title"><c:out value="${workshop.title}"/></h3>
+                            <p class="browse-sub"><c:out value="${workshop.organizer}"/></p>
+                            <div class="browse-meta">
+                                <span><i class="fa-regular fa-clock"></i> <c:out value="${workshop.duration}"/></span>
+                                <span><i class="fa-solid fa-graduation-cap"></i> <c:out value="${workshop.level != null ? workshop.level.displayName : 'All Levels'}"/></span>
+                            </div>
+                            <div class="browse-footer">
+                                <span class="browse-deadline"><i class="fa-regular fa-calendar"></i> Deadline <c:out value="${workshop.deadline}"/></span>
+                                <form method="post" action="${cp}/student/workshops/${workshop.id}/register">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-paper-plane"></i> Register</button>
+                                </form>
+                            </div>
                         </div>
-                        <h3 class="browse-title">Web Development Bootcamp</h3>
-                        <p class="browse-sub">Himalayan Labs</p>
-                        <div class="browse-meta">
-                            <span><i class="fa-solid fa-location-dot"></i> Online</span>
-                            <span><i class="fa-regular fa-clock"></i> 8 weeks</span>
-                            <span><i class="fa-solid fa-graduation-cap"></i> Beginner</span>
-                        </div>
-                        <div class="browse-footer">
-                            <span class="browse-deadline"><i
-                                    class="fa-regular fa-calendar"></i> Deadline Nov 10, 2026</span>
-                            <span class="badge badge-applied"><i class="fa-solid fa-check"></i> Registered</span>
-                        </div>
-                    </div>
-
-                    <div class="browse-card">
-                        <div class="browse-top">
-                            <span class="badge badge-workshop">Workshop</span>
-                            <span class="browse-loc"><i
-                                    class="fa-solid fa-calendar-days"></i> Starts Dec 05, 2026</span>
-                        </div>
-                        <h3 class="browse-title">Data Science with Python</h3>
-                        <p class="browse-sub">Everest Analytics</p>
-                        <div class="browse-meta">
-                            <span><i class="fa-solid fa-location-dot"></i> Kathmandu</span>
-                            <span><i class="fa-regular fa-clock"></i> 6 weeks</span>
-                            <span><i class="fa-solid fa-graduation-cap"></i> Intermediate</span>
-                        </div>
-                        <div class="browse-footer">
-                            <span class="browse-deadline"><i
-                                    class="fa-regular fa-calendar"></i> Deadline Nov 25, 2026</span>
-                            <span class="badge badge-applied"><i class="fa-solid fa-check"></i> Registered</span>
-                        </div>
-                    </div>
-
-                    <div class="browse-card">
-                        <div class="browse-top">
-                            <span class="badge badge-workshop">Workshop</span>
-                            <span class="browse-loc"><i
-                                    class="fa-solid fa-calendar-days"></i> Starts Dec 12, 2026</span>
-                        </div>
-                        <h3 class="browse-title">UI/UX Design Crash Course</h3>
-                        <p class="browse-sub">Craft Nepal</p>
-                        <div class="browse-meta">
-                            <span><i class="fa-solid fa-location-dot"></i> Online</span>
-                            <span><i class="fa-regular fa-clock"></i> 4 weeks</span>
-                            <span><i class="fa-solid fa-graduation-cap"></i> Beginner</span>
-                        </div>
-                        <div class="browse-footer">
-                            <span class="browse-deadline"><i
-                                    class="fa-regular fa-calendar"></i> Deadline Dec 05, 2026</span>
-                            <button class="btn btn-primary btn-sm"><i class="fa-solid fa-paper-plane"></i> Register
-                            </button>
-                        </div>
-                    </div>
-
+                    </c:forEach>
+                    <c:if test="${empty workshops}"><p>No workshops are available right now.</p></c:if>
                 </div>
             </div>
 
         </div>
 
-        <!-- PAGE: MY APPLICATIONS -->
+<%--        <!-- PAGE: MY APPLICATIONS -->--%>
         <div class="page" id="page-applications">
             <div class="panel">
                 <div class="panel-header">
@@ -496,24 +406,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><strong>Frontend Developer Intern</strong></td>
-                            <td>Himalayan Labs</td>
-                            <td>Oct 04, 2026</td>
-                            <td><span class="status-pending">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Data Analyst Intern</strong></td>
-                            <td>Everest Analytics</td>
-                            <td>Sep 27, 2026</td>
-                            <td><span class="status-accepted">Accepted</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>UI/UX Design Intern</strong></td>
-                            <td>Craft Nepal</td>
-                            <td>Sep 15, 2026</td>
-                            <td><span class="status-pending">Pending</span></td>
-                        </tr>
+                        <c:forEach items="${applications}" var="application">
+                            <tr>
+                                <td><c:out value="${application.internship.title}"/></td>
+                                <td><c:out value="${application.internship.company}"/></td>
+                                <td><c:out value="${application.appliedAt}"/></td>
+                                <td>
+            <span class="status-${application.status.name().toLowerCase()}">
+                <c:out value="${application.status}"/>
+            </span>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -537,18 +441,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><strong>Web Development Bootcamp</strong></td>
-                            <td>Himalayan Labs</td>
-                            <td>Oct 01, 2026</td>
-                            <td><span class="status-confirmed">Confirmed</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Data Science with Python</strong></td>
-                            <td>Everest Analytics</td>
-                            <td>Sep 20, 2026</td>
-                            <td><span class="status-confirmed">Confirmed</span></td>
-                        </tr>
+                        <c:forEach items="${registrations}" var="registration">
+                            <tr>
+                                <td><c:out value="${registration.workshop.title}"/></td>
+                                <td><c:out value="${registration.workshop.organizer}"/></td>
+                                <td><c:out value="${registration.registeredAt}"/></td>
+                                <td>
+            <span class="status-${registration.status.name().toLowerCase()}">
+                <c:out value="${registration.status}"/>
+            </span>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -567,7 +471,7 @@
                                  class="simple-profile-photo">
                         </c:when>
                         <c:otherwise>
-                            <img src="${cp}/assets/images/default-avatar.svg"
+                            <img src="${cp}/assets/images/pfp.png"
                                  alt="Default profile picture"
                                  class="simple-profile-photo">
                         </c:otherwise>

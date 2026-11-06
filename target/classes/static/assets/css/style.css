@@ -175,6 +175,17 @@ body{
     color: #991b1b;
 }
 
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.inline-form .opp-apply {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
 .login-btn{
     border: 1px solid #ccc;
     color: #313131;
@@ -3644,4 +3655,16 @@ body{
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid #e3f2fd;
+}
+
+
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.inline-form .opp-apply {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
 }

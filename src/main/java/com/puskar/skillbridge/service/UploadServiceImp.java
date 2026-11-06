@@ -48,6 +48,34 @@ public class UploadServiceImp implements UploadService {
         }
     }
 
+    @Override
+    public String uploadResumePdf(MultipartFile resumeFile) {
+        try {
+            if (resumeFile == null || resumeFile.isEmpty()
+                    || !"application/pdf".equalsIgnoreCase(resumeFile.getContentType())) {
+                return null;
+            }
+
+            String originalName = resumeFile.getOriginalFilename();
+            if (originalName == null || !originalName.toLowerCase().endsWith(".pdf")) {
+                return null;
+            }
+
+            String fileName = UUID.randomUUID() + ".pdf";
+            Path uploadPath = Paths.get("uploads/resumes/");
+            Files.createDirectories(uploadPath);
+            Files.copy(
+                    resumeFile.getInputStream(),
+                    uploadPath.resolve(fileName),
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+            return fileName;
+        } catch (IOException e) {
+            System.out.println("Resume upload exception: " + e.getMessage());
+            return null;
+        }
+    }
+
     private String getExtension(String fileName) {
         int lastDot = fileName.lastIndexOf(".");
 

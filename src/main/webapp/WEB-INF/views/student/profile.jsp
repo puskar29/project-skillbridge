@@ -195,6 +195,91 @@
       color: #1d4ed8;
       border: 1px solid #bfdbfe;
     }
+
+    .resume-card {
+      max-width: 760px;
+      padding: 20px;
+      border: 1px solid #dbeafe;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f8fbff, #eef6ff);
+    }
+
+    .resume-current {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .resume-current i {
+      font-size: 24px;
+      color: #dc2626;
+    }
+
+    .resume-current strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #14532d;
+    }
+
+    .resume-current a {
+      color: #15803d;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .resume-upload-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .resume-file-input {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: 1px dashed #93c5fd;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #4b5563;
+      cursor: pointer;
+    }
+
+    .resume-file-input:hover {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .resume-help {
+      margin-top: 8px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .resume-upload-button {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .resume-upload-button:hover {
+      background: #1d4ed8;
+    }
   </style>
 </head>
 
@@ -228,6 +313,12 @@
     <c:if test="${param.success != null}">
       <p class="text-sm text-emerald-600 mb-4 font-medium"><i class="fa-solid fa-circle-check"></i> Profile updated successfully.</p>
     </c:if>
+    <c:if test="${param.resumeSuccess != null}">
+      <p class="text-sm text-emerald-600 mb-4 font-medium"><i class="fa-solid fa-circle-check"></i> Resume uploaded successfully.</p>
+    </c:if>
+    <c:if test="${param.resumeError != null}">
+      <p class="text-sm text-red-600 mb-4 font-medium"><i class="fa-solid fa-circle-exclamation"></i> Please upload a valid PDF resume.</p>
+    </c:if>
 
     <div class="simple-profile">
 
@@ -239,7 +330,7 @@
                  class="simple-profile-photo">
           </c:when>
           <c:otherwise>
-            <img src="${cp}/assets/images/default-avatar.svg"
+            <img src="${cp}/assets/images/pfp.png"
                  alt="Default profile picture"
                  class="simple-profile-photo">
           </c:otherwise>
@@ -345,6 +436,30 @@
             <p>No skills added yet.</p>
           </c:otherwise>
         </c:choose>
+      </section>
+
+      <section class="simple-section">
+        <h2>Resume</h2>
+        <div class="resume-card">
+          <c:if test="${not empty student.resumeFile}">
+            <div class="resume-current">
+              <i class="fa-solid fa-file-pdf"></i>
+              <div>
+                <strong>Your resume is uploaded</strong>
+                <a href="${cp}/uploads/resumes/${student.resumeFile}" target="_blank" rel="noopener">View current PDF</a>
+              </div>
+            </div>
+          </c:if>
+          <form method="post" action="${cp}/student/profile/resume" enctype="multipart/form-data">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <label class="resume-upload-label" for="resumeFile">Choose a PDF resume</label>
+            <input class="resume-file-input" type="file" id="resumeFile" name="resumeFile" accept="application/pdf,.pdf" required>
+            <p class="resume-help">PDF only, maximum 10 MB recommended. Uploading a new file replaces your current resume.</p>
+            <button type="submit" class="resume-upload-button">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Upload resume
+            </button>
+          </form>
+        </div>
       </section>
 
     </div>

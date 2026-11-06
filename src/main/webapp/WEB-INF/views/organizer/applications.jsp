@@ -35,8 +35,6 @@
 </head>
 
 <body>
-<!-- Demo data — hardcoded, localStorage keeps your edits -->
-
 <!-- Dark background that appears behind the menu on small screens -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
@@ -77,11 +75,6 @@
     <div class="panel">
       <div class="panel-header">
         <h2>All Applications</h2>
-        <div class="panel-actions">
-          <button type="button" class="btn btn-sm btn-outline" onclick="resetDemo()">
-            <i class="fa-solid fa-rotate-left"></i> Reset demo data
-          </button>
-        </div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm [&_th]:whitespace-nowrap [&_th]:border-b [&_th]:border-[#90caf9] [&_th]:bg-[#e3f2fd] [&_th]:px-3.5 [&_th]:py-3 [&_th]:text-left [&_th]:font-heading [&_th]:text-[11px] [&_th]:font-semibold [&_th]:uppercase [&_th]:tracking-wider [&_th]:text-[#546e7e] [&_td]:border-b [&_td]:border-[#e3f2fd] [&_td]:px-3.5 [&_td]:py-3.5 [&_td]:align-middle [&_td]:text-[#0d47a1] [&_tr:last-child_td]:border-b-0 [&_tbody_tr:hover_td]:bg-[#e3f2fd]">
@@ -90,120 +83,66 @@
             <th>Applicant</th>
             <th>Internship</th>
             <th>Institute</th>
+            <th>Resume</th>
             <th>Applied</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
           </thead>
           <tbody id="appsBody">
-          <tr data-id="1041" data-kind="applications" data-status="pending">
-            <td><strong>Anjali Thapa</strong></td>
-            <td>Frontend Developer Intern</td>
-            <td>Institute of Engineering</td>
-            <td>Oct 06, 2026</td>
-            <td><span class="status-pending">Pending</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="approved" title="Approve" class="!border-emerald-500 !bg-emerald-500 !text-white hover:!border-emerald-600 hover:!bg-emerald-600"><i class="fa-solid fa-check"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="rejected" title="Reject" class="!border-red-500 !text-red-500 hover:!bg-red-50 hover:!text-red-600"><i class="fa-solid fa-xmark"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1040" data-kind="applications" data-status="approved">
-            <td><strong>Bibek Shrestha</strong></td>
-            <td>Backend Developer Intern</td>
-            <td>Tribhuvan University</td>
-            <td>Oct 05, 2026</td>
-            <td><span class="status-approved">Approved</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="prompt-status" data-kind="applications" title="Edit Status"><i class="fa-solid fa-pen"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1039" data-kind="applications" data-status="pending">
-            <td><strong>Priya Karki</strong></td>
-            <td>Data Analyst Intern</td>
-            <td>Kathmandu University</td>
-            <td>Oct 04, 2026</td>
-            <td><span class="status-pending">Pending</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="approved" title="Approve" class="!border-emerald-500 !bg-emerald-500 !text-white hover:!border-emerald-600 hover:!bg-emerald-600"><i class="fa-solid fa-check"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="rejected" title="Reject" class="!border-red-500 !text-red-500 hover:!bg-red-50 hover:!text-red-600"><i class="fa-solid fa-xmark"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1038" data-kind="applications" data-status="rejected">
-            <td><strong>Sandip Gurung</strong></td>
-            <td>DevOps Engineering Intern</td>
-            <td>Pokhara University</td>
-            <td>Oct 03, 2026</td>
-            <td><span class="status-rejected">Rejected</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="prompt-status" data-kind="applications" title="Edit Status"><i class="fa-solid fa-pen"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1037" data-kind="applications" data-status="waitlist">
-            <td><strong>Nisha Rai</strong></td>
-            <td>UI/UX Design Intern</td>
-            <td>St. Xavier's College</td>
-            <td>Oct 02, 2026</td>
-            <td><span class="status-waitlist">Waitlist</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="prompt-status" data-kind="applications" title="Edit Status"><i class="fa-solid fa-pen"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1036" data-kind="applications" data-status="approved">
-            <td><strong>Kabita Sharma</strong></td>
-            <td>Frontend Developer Intern</td>
-            <td>Islington College</td>
-            <td>Oct 01, 2026</td>
-            <td><span class="status-approved">Approved</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="prompt-status" data-kind="applications" title="Edit Status"><i class="fa-solid fa-pen"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1035" data-kind="applications" data-status="pending">
-            <td><strong>Rojan Lama</strong></td>
-            <td>Marketing &amp; Content Intern</td>
-            <td>Ace Institute of Management</td>
-            <td>Sep 30, 2026</td>
-            <td><span class="status-pending">Pending</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="approved" title="Approve" class="!border-emerald-500 !bg-emerald-500 !text-white hover:!border-emerald-600 hover:!bg-emerald-600"><i class="fa-solid fa-check"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="rejected" title="Reject" class="!border-red-500 !text-red-500 hover:!bg-red-50 hover:!text-red-600"><i class="fa-solid fa-xmark"></i></button>
-              </div>
-            </td>
-          </tr>
-          <tr data-id="1034" data-kind="applications" data-status="pending">
-            <td><strong>Dipesh K.C.</strong></td>
-            <td>Data Analyst Intern</td>
-            <td>Tribhuvan University</td>
-            <td>Sep 29, 2026</td>
-            <td><span class="status-pending">Pending</span></td>
-            <td>
-              <div class="flex items-center gap-1.5 whitespace-nowrap [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:cursor-pointer [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-[#90caf9] [&>button]:bg-white [&>button]:text-[13px] [&>button]:text-[#546e7e] [&>button]:transition [&>button]:hover:border-brand [&>button]:hover:bg-brand-tint [&>button]:hover:text-brand">
-                <button type="button" data-action="view" title="View"><i class="fa-solid fa-eye"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="approved" title="Approve" class="!border-emerald-500 !bg-emerald-500 !text-white hover:!border-emerald-600 hover:!bg-emerald-600"><i class="fa-solid fa-check"></i></button>
-                <button type="button" data-action="set-status" data-kind="applications" data-status="rejected" title="Reject" class="!border-red-500 !text-red-500 hover:!bg-red-50 hover:!text-red-600"><i class="fa-solid fa-xmark"></i></button>
-              </div>
-            </td>
-          </tr>
+          <c:forEach items="${applications}" var="application">
+            <tr>
+              <td>
+                <strong>
+                  <c:out value="${application.student.firstName}"/>
+                  <c:out value="${application.student.lastName}"/>
+                </strong>
+              </td>
+              <td><c:out value="${application.internship.title}"/></td>
+              <td><c:out value="${application.student.college}"/></td>
+              <td>
+                <c:choose>
+                  <c:when test="${not empty application.student.resumeFile}">
+                    <a href="${cp}/uploads/resumes/${application.student.resumeFile}" target="_blank" rel="noopener">
+                      <i class="fa-solid fa-file-pdf"></i> View PDF
+                    </a>
+                  </c:when>
+                  <c:otherwise>Not uploaded</c:otherwise>
+                </c:choose>
+              </td>
+              <td><c:out value="${application.appliedAt}"/></td>
+              <td>
+            <span class="status-${application.status.name().toLowerCase()}">
+                <c:out value="${application.status}"/>
+            </span>
+              </td>
+              <td>
+                <div class="decision-actions">
+                <form method="post" class="decision-form"
+                      action="${cp}/organizer/applications/${application.id}/status">
+                  <input type="hidden"
+                         name="status"
+                         value="APPROVED">
+                  <button type="submit" class="decision-btn decision-approve" title="Approve">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Approve</span>
+                  </button>
+                </form>
+
+                <form method="post" class="decision-form"
+                      action="${cp}/organizer/applications/${application.id}/status">
+                  <input type="hidden"
+                         name="status"
+                         value="REJECTED">
+                  <button type="submit" class="decision-btn decision-reject" title="Reject">
+                    <i class="fa-solid fa-xmark"></i>
+                    <span>Reject</span>
+                  </button>
+                </form>
+                </div>
+              </td>
+            </tr>
+          </c:forEach>
           </tbody>
         </table>
       </div>

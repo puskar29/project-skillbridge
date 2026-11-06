@@ -621,19 +621,6 @@ function changeStatus(id, status, kind) {
 }
 
 
-// Reset demo data
-
-function resetDemo() {
-
-    localStorage.clear();
-
-    window.location.reload();
-
-}
-
-window.resetDemo = resetDemo;
-
-
 // Escape key closes modal
 
 document.addEventListener("keydown", (event) => {

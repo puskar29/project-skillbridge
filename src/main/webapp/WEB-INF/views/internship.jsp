@@ -64,7 +64,7 @@
     <button class="opp-tab" data-filter="remote">Remote</button>
   </div>
 
-  <!-- Cards — demo data hardcoded, js/filters.js reads the classes -->
+  <!-- Cards are loaded from active internships; filters.js reads their classes. -->
   <div class="in-grid" id="in-grid">
 
     <c:choose>
@@ -90,7 +90,16 @@
             </div>
             <div class="in-card-bottom">
               <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${intern.deadline}" /></span>
-              <a href="javascript:void(0)" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
+              <c:choose>
+                <c:when test="${not empty student}">
+                  <form method="post" action="${cp}/student/internships/${intern.id}/apply" class="inline-form">
+                    <button type="submit" class="in-apply">Apply <i class="fa-solid fa-arrow-right"></i></button>
+                  </form>
+                </c:when>
+                <c:otherwise>
+                  <a href="${cp}/login" class="in-apply">Login to Apply <i class="fa-solid fa-arrow-right"></i></a>
+                </c:otherwise>
+              </c:choose>
             </div>
           </article>
         </c:forEach>
@@ -128,7 +137,6 @@
 
 <script src="${cp}/assets/js/navbar.js"></script>
 <script src="${cp}/assets/js/filters.js"></script>
-<script src="${cp}/assets/js/apply-modal.js"></script>
 
 </body>
 

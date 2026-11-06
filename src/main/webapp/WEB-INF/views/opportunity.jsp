@@ -79,7 +79,23 @@
         </div>
         <div class="opp-card-bottom">
           <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${intern.deadline}"/></span>
-          <a href="${cp}/signup" class="opp-apply">Apply <i class="fa-solid fa-arrow-right"></i></a>
+          <c:choose>
+            <c:when test="${not empty student}">
+              <form method="post"
+                    action="${cp}/student/internships/${intern.id}/apply"
+                    class="inline-form">
+                <button type="submit" class="opp-apply">
+                  Apply <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </form>
+            </c:when>
+
+            <c:otherwise>
+              <a href="${cp}/login" class="opp-apply">
+                Login to Apply <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </c:otherwise>
+          </c:choose>
         </div>
       </article>
     </c:forEach>
@@ -100,7 +116,16 @@
         </div>
         <div class="opp-card-bottom">
           <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${workshop.deadline}"/></span>
-          <a href="${cp}/signup" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
+          <c:choose>
+            <c:when test="${not empty student}">
+              <form method="post" action="${cp}/student/workshops/${workshop.id}/register" class="inline-form">
+                <button type="submit" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></button>
+              </form>
+            </c:when>
+            <c:otherwise>
+              <a href="${cp}/login" class="opp-apply">Login to Register <i class="fa-solid fa-arrow-right"></i></a>
+            </c:otherwise>
+          </c:choose>
         </div>
       </article>
     </c:forEach>
@@ -126,7 +151,6 @@
 
 <script src="${cp}/assets/js/navbar.js"></script>
 <script src="${cp}/assets/js/filters.js"></script>
-<script src="${cp}/assets/js/apply-modal.js"></script>
 
 </body>
 

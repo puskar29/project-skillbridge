@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.puskar.skillbridge.SkillbridgeApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.308 s -- in com.puskar.skillbridge.SkillbridgeApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.375 s -- in com.puskar.skillbridge.SkillbridgeApplicationTests

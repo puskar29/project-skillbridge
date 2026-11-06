@@ -1,5 +1,7 @@
 package com.puskar.skillbridge.controller;
 
+import com.puskar.skillbridge.dao.ApplicationDao;
+import com.puskar.skillbridge.dao.RegistrationDao;
 import com.puskar.skillbridge.dao.StudentDao;
 import com.puskar.skillbridge.model.Student;
 import com.puskar.skillbridge.service.InternshipService;
@@ -26,24 +28,36 @@ public class StudentController {
     private final InternshipService internshipService;
     private final WorkshopService workshopService;
     private final UploadService uploadService;
+    private final ApplicationDao applicationDao;
+    private final RegistrationDao registrationDao;
 
-    public StudentController(StudentDao studentDao, InternshipService internshipService, WorkshopService workshopService, UploadService uploadService) {
+
+    public StudentController(StudentDao studentDao, InternshipService internshipService, WorkshopService workshopService, UploadService uploadService, ApplicationDao applicationDao, RegistrationDao registrationDao) {
         this.studentDao = studentDao;
         this.internshipService = internshipService;
         this.workshopService = workshopService;
         this.uploadService = uploadService;
+        this.applicationDao = applicationDao;
+        this.registrationDao = registrationDao;
     }
 
     @GetMapping({"/student/dashboard", "/student/home"})
     public String StudentProfile(Model model, Principal principal){
 
-        if (principal != null){
-            Student student = studentDao.findByEmailIgnoreCase(principal.getName()).orElse(null);
-            model.addAttribute("student", student);
-            if (student != null && student.getCreatedAt() != null) {
-                model.addAttribute("memberSince", student.getCreatedAt().format(DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH)));
-            }
-        }
+        Student student = studentDao
+                .findByEmailIgnoreCase(principal.getName())
+                .orElseThrow();
+
+        model.addAttribute("student", student);
+        model.addAttribute(
+                "applications",
+                applicationDao.findByStudentOrderByAppliedAtDesc(student)
+        );
+        model.addAttribute(
+                "registrations",
+                registrationDao.findByStudentOrderByRegisteredAtDesc(student)
+        );
+
 
         model.addAttribute("internships", internshipService.getActiveInternships());
         model.addAttribute("workshops", workshopService.getActiveWorkshops());
@@ -122,5 +136,23 @@ public class StudentController {
 
         return "redirect:/student/profile";
     }
-}
 
+    @PostMapping("/student/profile/resume")
+    public String uploadResume(
+            @RequestParam("resumeFile") MultipartFile resumeFile,
+            Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        Student student = studentDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
+        String fileName = uploadService.uploadResumePdf(resumeFile);
+        if (fileName != null) {
+            student.setResumeFile(fileName);
+            studentDao.save(student);
+            return "redirect:/student/profile?resumeSuccess";
+        }
+
+        return "redirect:/student/profile?resumeError";
+    }
+}

@@ -41,12 +41,14 @@ button { font-family: "Inter", sans-serif; }
 
 /* status colors used in the student portal */
 .status-pending  { color: #f59e0b; }
+.status-approved { color: #10b981; }
 .status-accepted { color: #10b981; }
 .status-rejected { color: #ef4444; }
 .status-confirmed { color: #10b981; }
 .status-cancelled { color: #ef4444; }
 
 .status-pending::before,
+.status-approved::before,
 .status-accepted::before,
 .status-rejected::before,
 .status-confirmed::before,

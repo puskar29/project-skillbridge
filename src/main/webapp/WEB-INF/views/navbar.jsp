@@ -40,9 +40,9 @@
                      class="navbar-profile-image">
               </c:when>
               <c:otherwise>
-                <span class="navbar-profile-fallback">
-                  ${empty student.firstName ? 'S' : student.firstName.substring(0, 1)}
-                </span>
+                <img src="${cp}/assets/images/pfp.png"
+                     alt="Default profile picture"
+                     class="navbar-profile-image">
               </c:otherwise>
             </c:choose>
             <span class="navbar-profile-name">${student.firstName}</span>
@@ -66,9 +66,9 @@
                      class="navbar-profile-image">
               </c:when>
               <c:otherwise>
-                <span class="navbar-profile-fallback">
-                  ${empty organizer.firstName ? 'O' : organizer.firstName.substring(0, 1)}
-                </span>
+                <img src="${cp}/assets/images/pfp.png"
+                     alt="Default profile picture"
+                     class="navbar-profile-image">
               </c:otherwise>
             </c:choose>
             <span class="navbar-profile-name">${organizer.firstName}</span>

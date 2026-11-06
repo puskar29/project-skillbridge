@@ -198,7 +198,7 @@
 
             <div class="field">
               <label for="title">Workshop Title <span class="required">*</span></label>
-              <input type="text" id="title" name="title" placeholder="Web Development Bootcamp">
+              <input type="text" id="title" name="title" placeholder="Enter workshop title">
             </div>
 
             <div class="form-row">

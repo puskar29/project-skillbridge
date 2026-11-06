@@ -213,6 +213,26 @@
         <button type="submit" class="btn btn-primary">Upload Photo</button>
       </div>
     </form>
+
+    <form class="panel form-card"
+          method="post"
+          action="${cp}/student/profile/resume"
+          enctype="multipart/form-data">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
+      <div class="form-section">
+        <div class="form-section-title">
+          <i class="fa-solid fa-file-pdf"></i> Resume
+        </div>
+        <p class="hint">Upload a PDF once. Organizers can view it when you apply.</p>
+        <input type="file"
+               id="resumeFile"
+               name="resumeFile"
+               accept="application/pdf,.pdf"
+               required>
+        <button type="submit" class="btn btn-primary">Upload Resume</button>
+      </div>
+    </form>
   </div>
 
 </div>

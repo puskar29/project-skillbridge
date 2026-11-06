@@ -25,7 +25,10 @@ public class InternshipController {
     }
 
     @GetMapping("/organizer/internship/add")
-    private String openInternship(Model model){
+    private String openInternship(Model model, Principal principal){
+        if (!isApproved(principal)) {
+            return "redirect:/organizer/home?error=not-approved";
+        }
         return "organizer/add-internship";
     }
 
@@ -36,8 +39,8 @@ public class InternshipController {
                                  ){
         Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElse(null);
         internship.setOrganizer(currentOrganizer);
-        if (currentOrganizer == null) {
-            return "redirect:/login";
+        if (currentOrganizer == null || !currentOrganizer.isApproved()) {
+            return "redirect:/organizer/home?error=not-approved";
         }
         internship.setCompany(currentOrganizer.getOrganizationName());
 
@@ -62,12 +65,18 @@ public class InternshipController {
     @GetMapping("/organizer/internship/manage")
     private String showInternship(Model model, Principal principal){
         Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElse(null);
+        if (currentOrganizer == null || !currentOrganizer.isApproved()) {
+            return "redirect:/organizer/home?error=not-approved";
+        }
         model.addAttribute("intern_list", internshipService.getInternshipsByOrganizer(currentOrganizer));
         return "organizer/manage-internships";
     }
 
     @GetMapping("/organizer/internship/edit/{id}")
-    public String editInternshipForm(@PathVariable Long id, Model model){
+    public String editInternshipForm(@PathVariable Long id, Model model, Principal principal){
+        if (!isApproved(principal)) {
+            return "redirect:/organizer/home?error=not-approved";
+        }
         Internship internship = internshipService.getInternshipById(id);
         model.addAttribute("internship", internship);
         model.addAttribute("edit", true);
@@ -93,11 +102,21 @@ public class InternshipController {
 
         internship.setId(id);
         Organizer currentOrganizer = organizerDao.findByEmailIgnoreCase(principal.getName()).orElseThrow();
+        if (!currentOrganizer.isApproved()) {
+            return "redirect:/organizer/home?error=not-approved";
+        }
         internship.setCompany(currentOrganizer.getOrganizationName());
         internship.setOrganizer(currentOrganizer);
         internship.setSkills(skills);
         internshipService.updateInternship(internship);
         return "redirect:/organizer/internship/manage?updated";
+    }
+
+    private boolean isApproved(Principal principal) {
+        return principal != null
+                && organizerDao.findByEmailIgnoreCase(principal.getName())
+                .map(Organizer::isApproved)
+                .orElse(false);
     }
 
 

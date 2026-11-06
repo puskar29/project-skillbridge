@@ -4,4 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UploadService {
     String uploadProfileImg(MultipartFile imageFile);
+
+    String uploadResumePdf(MultipartFile resumeFile);
 }

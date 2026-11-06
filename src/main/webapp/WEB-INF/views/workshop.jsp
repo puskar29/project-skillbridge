@@ -56,7 +56,7 @@
     <button class="opp-tab" data-filter="online">Online</button>
   </div>
 
-  <!-- Cards — demo data hardcoded, filter reads the classes -->
+  <!-- Cards are loaded from active workshops; the filter reads their classes. -->
   <div class="ws-grid" id="ws-grid">
 
     <c:choose>
@@ -78,7 +78,23 @@
               </div>
               <div class="ws-card-bottom">
                 <span class="ws-level"><c:out value="${ws.level != null ? ws.level.displayName : 'All Levels'}" /></span>
-                <a href="javascript:void(0)" class="ws-apply">Register <i class="fa-solid fa-arrow-right"></i></a>
+                <c:choose>
+                  <c:when test="${not empty student}">
+                    <form method="post"
+                          action="${cp}/student/workshops/${ws.id}/register"
+                          class="inline-form">
+                      <button type="submit" class="opp-apply">
+                        Register <i class="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </form>
+                  </c:when>
+
+                  <c:otherwise>
+                    <a href="${cp}/login" class="opp-apply">
+                      Login to Register <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                  </c:otherwise>
+                </c:choose>
               </div>
             </div>
           </article>
@@ -117,8 +133,6 @@
 
 <script src="${cp}/assets/js/navbar.js"></script>
 <script src="${cp}/assets/js/filters.js"></script>
-<script src="${cp}/assets/js/apply-modal.js"></script>
-
 </body>
 
 </html>

@@ -34,6 +34,17 @@
 <body class="font-['Poppins']">
 
 <jsp:include page="navbar.jsp"></jsp:include>
+<c:if test="${param.applied != null or param.registered != null}">
+    <div class="action-notification" role="status">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>
+            <c:choose>
+                <c:when test="${param.applied != null}">Application submitted successfully.</c:when>
+                <c:otherwise>Workshop registration completed successfully.</c:otherwise>
+            </c:choose>
+        </span>
+    </div>
+</c:if>
 <section class="main">
     <div class="content">
         <span class="hero-badge">
@@ -125,12 +136,26 @@
 </section>
 <section class="opportunities" id="opportunities">
     <div class="opportunities-header">
-        <h4>Latest Opportunities</h4>
-        <h1>Find What's Trending<br>This Week</h1>
-        <p>Browse the newest internships, workshops and events<br>added by our partners</p>
+        <c:choose>
+            <c:when test="${not empty keyword}">
+                <h4>Search Results</h4>
+                <h1>Opportunities matching<br>"<c:out value="${keyword}"/>"</h1>
+                <p>Showing active internships and workshops matching your search.</p>
+            </c:when>
+            <c:otherwise>
+                <h4>Latest Opportunities</h4>
+                <h1>Find What's Trending<br>This Week</h1>
+                <p>Browse the newest internships, workshops and events<br>added by our partners</p>
+            </c:otherwise>
+        </c:choose>
     </div>
     <div class="opp-tabs">
-        <p class="opp-tab" data-filter="all">Trending Opportunities</p>
+        <p class="opp-tab" data-filter="all">
+            <c:choose>
+                <c:when test="${not empty keyword}">Search Results</c:when>
+                <c:otherwise>Trending Opportunities</c:otherwise>
+            </c:choose>
+        </p>
     </div>
     <div class="opp-grid">
         <c:forEach items="${trendingInternships}" var="intern">
@@ -150,7 +175,7 @@
                     <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${intern.deadline}"/></span>
                     <c:choose>
                         <c:when test="${not empty student}">
-                            <form method="post" action="${cp}/student/internships/${intern.id}/apply" class="inline-form">
+                            <form method="post" action="${cp}/student/internships/${intern.id}/apply" class="inline-form confirm-action" data-confirm-message="Are you sure you want to apply for this internship?">
                                 <button type="submit" class="opp-apply">Apply <i class="fa-solid fa-arrow-right"></i></button>
                             </form>
                         </c:when>
@@ -177,7 +202,7 @@
                     <span class="opp-deadline"><i class="fa-regular fa-calendar"></i> Deadline: <c:out value="${workshop.deadline}"/></span>
                     <c:choose>
                         <c:when test="${not empty student}">
-                            <form method="post" action="${cp}/student/workshops/${workshop.id}/register" class="inline-form">
+                            <form method="post" action="${cp}/student/workshops/${workshop.id}/register" class="inline-form confirm-action" data-confirm-message="Are you sure you want to register for this workshop?">
                                 <button type="submit" class="opp-apply">Register <i class="fa-solid fa-arrow-right"></i></button>
                             </form>
                         </c:when>
@@ -189,12 +214,31 @@
 
         <c:if test="${empty trendingInternships and empty trendingWorkshops}">
             <div class="empty-state">
-                <p>No opportunities have been posted yet. Check back soon!</p>
+                <p>
+                    <c:choose>
+                        <c:when test="${not empty keyword}">
+                            No opportunities match "<c:out value="${keyword}"/>". Try a different search.
+                        </c:when>
+                        <c:otherwise>No opportunities have been posted yet. Check back soon!</c:otherwise>
+                    </c:choose>
+                </p>
             </div>
         </c:if>
     </div>
 </section>
+<div class="confirm-modal is-hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="confirm-backdrop" data-confirm-cancel></div>
+    <div class="confirm-dialog">
+        <h2 id="confirmTitle">Please confirm</h2>
+        <p id="confirmMessage">Are you sure?</p>
+        <div class="confirm-actions">
+            <button type="button" class="confirm-cancel" data-confirm-cancel>Cancel</button>
+            <button type="button" class="confirm-submit" id="confirmSubmit">Confirm</button>
+        </div>
+    </div>
+</div>
 <jsp:include page="footer.jsp"></jsp:include>
 <script src="${cp}/assets/js/navbar.js"></script>
+<script src="${cp}/assets/js/confirm-modal.js"></script>
 </body>
 </html>

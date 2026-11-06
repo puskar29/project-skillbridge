@@ -5,6 +5,7 @@ import com.puskar.skillbridge.service.WorkshopService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,12 +21,23 @@ public class HomeController {
     }
 
     @GetMapping({"/", "/home", "/index"})
-    public String home(Model model){
-        List<?> activeInternships = internshipService.getActiveInternships();
-        List<?> activeWorkshops = workshopService.getActiveWorkshops();
+    public String home(@RequestParam(required = false) String keyword,
+                       Model model){
+        String searchKeyword = keyword == null ? "" : keyword.trim();
+        List<?> activeInternships = searchKeyword.isEmpty()
+                ? internshipService.getActiveInternships()
+                : internshipService.searchActive(searchKeyword);
+        List<?> activeWorkshops = searchKeyword.isEmpty()
+                ? workshopService.getActiveWorkshops()
+                : workshopService.searchActive(searchKeyword);
 
-        model.addAttribute("trendingInternships", activeInternships.stream().limit(3).toList());
-        model.addAttribute("trendingWorkshops", activeWorkshops.stream().limit(3).toList());
+        model.addAttribute("trendingInternships", searchKeyword.isEmpty()
+                ? activeInternships.stream().limit(3).toList()
+                : activeInternships);
+        model.addAttribute("trendingWorkshops", searchKeyword.isEmpty()
+                ? activeWorkshops.stream().limit(3).toList()
+                : activeWorkshops);
+        model.addAttribute("keyword", searchKeyword);
         return "index";
     }
 

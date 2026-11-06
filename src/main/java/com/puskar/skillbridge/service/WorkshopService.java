@@ -21,4 +21,6 @@ public interface WorkshopService {
     List<Workshop> getWorkshopByOrganizer(Organizer organizer);
 
     List<Workshop> getActiveWorkshops();
+
+    List<Workshop> searchActive(String keyword);
 }

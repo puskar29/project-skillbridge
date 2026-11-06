@@ -23,4 +23,6 @@ public interface InternshipService {
 
     List<Internship> getActiveInternships();
 
+    List<Internship> searchActive(String keyword);
+
 }

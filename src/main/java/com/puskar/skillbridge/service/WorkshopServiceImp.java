@@ -59,4 +59,9 @@ public class WorkshopServiceImp implements WorkshopService {
     public List<Workshop> getActiveWorkshops() {
         return workshopDao.findByActiveTrueOrderByCreatedAtDesc();
     }
+
+    @Override
+    public List<Workshop> searchActive(String keyword) {
+        return workshopDao.searchActive(keyword);
+    }
 }

@@ -27,6 +27,11 @@
       <a href="${cp}/about" class="nav-link">About Us</a>
       <a href="${cp}/contact" class="nav-link">Contact</a>
     </nav>
+    <form method="get" action="${cp}/index#opportunities" class="navbar-search">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" name="keyword" value="${keyword}" placeholder="Search opportunities..." aria-label="Search opportunities">
+      <button type="submit">Search</button>
+    </form>
     <div class="auth-buttons">
       <c:choose>
 
@@ -47,7 +52,6 @@
             </c:choose>
             <span class="navbar-profile-name">${student.firstName}</span>
           </a>
-
           <form method="post" action="${cp}/logout" class="logout-form">
             <button type="submit" class="logout-btn">
               <i class="fa-solid fa-right-from-bracket"></i>
@@ -73,7 +77,6 @@
             </c:choose>
             <span class="navbar-profile-name">${organizer.firstName}</span>
           </a>
-
           <form method="post" action="${cp}/logout" class="logout-form">
             <button type="submit" class="logout-btn">
               <i class="fa-solid fa-right-from-bracket"></i>

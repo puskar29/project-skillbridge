@@ -60,4 +60,9 @@ public class InternshipServiceImp implements InternshipService{
     public List<Internship> getActiveInternships() {
         return internshipDao.findByActiveTrueOrderByCreatedAtDesc();
     }
+
+    @Override
+    public List<Internship> searchActive(String keyword) {
+        return internshipDao.searchActive(keyword);
+    }
 }

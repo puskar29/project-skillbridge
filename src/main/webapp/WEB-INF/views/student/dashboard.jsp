@@ -185,6 +185,17 @@
 </head>
 
 <body>
+<c:if test="${param.applied != null or param.registered != null}">
+    <div class="action-notification" role="status">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>
+            <c:choose>
+                <c:when test="${param.applied != null}">Application submitted successfully.</c:when>
+                <c:otherwise>Workshop registration completed successfully.</c:otherwise>
+            </c:choose>
+        </span>
+    </div>
+</c:if>
 <jsp:include page="student-sidebar.jsp">
     <jsp:param name="activePage" value="overview"/>
 </jsp:include>
@@ -202,7 +213,7 @@
             <section class="hero-banner">
                 <div>
                     <span class="hero-tag">Your SkillBridge Space</span>
-                    <h1>Hey, ${empty student ? 'Student' : student.firstName}!</h1>
+                    <h1>Welcome, ${empty student ? 'Student' : student.firstName}!</h1>
                     <p>Welcome back to your student dashboard. Here is what's happening with your applications and
                         workshops.</p>
                     <div class="hero-actions">

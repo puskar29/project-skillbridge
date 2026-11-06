@@ -53,7 +53,7 @@ public class RegistrationController {
         registration.setWorkshop(workshop);
         registrationDao.save(registration);
 
-        return "redirect:/student/dashboard?registered";
+        return "redirect:/index?registered";
     }
 
 }

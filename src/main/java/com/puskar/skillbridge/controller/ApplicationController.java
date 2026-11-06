@@ -53,6 +53,6 @@ public class ApplicationController {
         application.setInternship(internship);
         applicationDao.save(application);
 
-        return "redirect:/student/dashboard?applied";
+        return "redirect:/index?applied";
     }
 }
